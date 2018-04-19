@@ -109,7 +109,7 @@ Synopsis
 
 ### Defining a function taking a `type`-derived type
 
-```
+```C++
 #include "nonstd/type.hpp" 
 #include <cmath> 
 #include <iostream>
@@ -184,6 +184,7 @@ Notes and references
 - Andrzej Krzemieński. [noexcept — what for?](https://akrzemi1.wordpress.com/2014/04/24/noexcept-what-for/). 24 April 2014.
 
 *Presentations*
+- Björn Fahller. [Type Safe C++? - LOL! :-)](https://github.com/ACCUConf/ACCUConf_PDFs/blob/master/2018/Bjorn_Fahller_-_Type_safe_c%2B%2B.pdf). ACCU 2018.
 - Jonathan Boccara. [Strong types for strong interfaces](https://youtu.be/WVleZqzTw2k).  Meeting C++ 2017.
 - Kyle Markley. [Extreme Type Safety with Opaque Typedefs](https://github.com/CppCon/CppCon2015/blob/master/Lightning%20Talks%20and%20Lunch%20Sessions/Extreme%20Type%20Safety%20with%20Opaque%20Typedefs/Extreme%20Type%20Safety%20with%20Opaque%20Typedefs%20-%20Kyle%20Markley%20-%20CppCon%202015.pdf). CppCon 2015.
 
