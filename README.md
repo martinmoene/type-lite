@@ -170,8 +170,10 @@ All tests should pass, indicating your platform is supported and you are ready t
 
 Other implementations of strong types
 -------------------------------------
+- Tony van Eerd. [StrongId](https://github.com/tvaneerd/code) on GitHub, since 2017.
 - Jonathan Boccara. [NamedType](https://github.com/joboccara/NamedType) on GitHub, since 2017.
 - Jonathan Müller. [type_safe](https://github.com/foonathan/type_safe) on GitHub, since 2016.
+- Vicente J. Botet Escriba. [std-make strong](https://github.com/viboes/std-make/tree/master/include/experimental/fundamental/v3/strong) on GitHub since 2017.
 - Martin Moene. [WholeValue](https://github.com/martinmoene/WholeValue) on GitHub, since 2012.
 - Boost.Serialization. [Boost Strong Typedef](http://www.boost.org/doc/libs/1_61_0/libs/serialization/doc/strong_typedef.html). Boost 1.61.0. 
 
