@@ -1,18 +1,10 @@
+// Copyright 2018 Martin Moene
 //
 // type, strong types for C++98 and later.
 // For more information see https://github.com/martinmoene/type
 //
-// Copyright (c) 2018 Martin Moene
-//
-// This code is licensed under the MIT License (MIT).
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// Distributed under the Boost Software License, Version 1.0. 
+// (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef NONSTD_TYPE_HPP_INCLUDED
 #define NONSTD_TYPE_HPP_INCLUDED
