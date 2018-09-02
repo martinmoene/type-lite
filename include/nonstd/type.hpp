@@ -9,7 +9,14 @@
 #ifndef NONSTD_TYPE_HPP_INCLUDED
 #define NONSTD_TYPE_HPP_INCLUDED
 
-#define  type_VERSION "0.0.0"
+#define type_MAJOR  0
+#define type_MINOR  0
+#define type_PATCH  0
+
+#define type_VERSION  type_STRINGIFY(type_MAJOR) "." type_STRINGIFY(type_MINOR) "." type_STRINGIFY(type_PATCH)
+
+#define type_STRINGIFY(  x )  type_STRINGIFY_( x )
+#define type_STRINGIFY_( x )  #x
 
 // nonstd type configuration:
 

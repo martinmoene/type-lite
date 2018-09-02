@@ -5,6 +5,10 @@
 
 cmake_minimum_required( VERSION 3.5 )
 
+# type version, updated by script/update-version.py:
+
+set( type_version "0.0.0" )
+
 # At default, enable building and performing of tests and building of examples:
 
 option( TYPE_OPT_BUILD_TESTS    "Build and perform type tests" ON )

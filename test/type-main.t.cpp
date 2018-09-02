@@ -19,6 +19,14 @@ lest::tests & specification()
     return tests;
 }
 
+CASE( "type version" "[.version]" )
+{
+    type_PRESENT( type_MAJOR );
+    type_PRESENT( type_MINOR );
+    type_PRESENT( type_PATCH );
+    type_PRESENT( type_VERSION );
+}
+
 CASE( "__cplusplus" "[.stdc++]" )
 {
     type_PRESENT( __cplusplus );
@@ -28,11 +36,6 @@ CASE( "__cplusplus" "[.stdc++]" )
 #else
     type_ABSENT(  _MSVC_LANG );
 #endif
-}
-
-CASE( "type version" "[.version]" )
-{
-    type_PRESENT( type_VERSION );
 }
 
 CASE( "type configuration" "[.config]" )

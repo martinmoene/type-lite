@@ -21,6 +21,7 @@
 		<Unit filename="../../example/01-basic.cpp" />
 		<Unit filename="../../example/05-function.cpp" />
 		<Unit filename="../../include/nonstd/type.hpp" />
+		<Unit filename="../../script/update-version.py" />
 		<Unit filename="../../spike/main.cpp" />
 		<Unit filename="../../spike/simple.cpp" />
 		<Unit filename="../../spike/using-template.cpp" />
