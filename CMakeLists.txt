@@ -28,8 +28,12 @@ add_library(
 target_include_directories( 
     ${package_name} INTERFACE "$<BUILD_INTERFACE:${include_source_dir}>" )
 
+# Installation:
+
 install( 
     DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR} )
+
+# If requested, build and perform tests, build examples:
 
 enable_testing()
 
