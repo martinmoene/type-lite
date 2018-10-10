@@ -277,7 +277,7 @@ struct data
 #if type_CPP11_OR_GREATER
     type_constexpr14 void swap( data & other )
     {
-        auto tmp{ std::move( other.get() ) };
+        T tmp{ std::move( other.get() ) };
         other.get() = std::move( this->get() );
         this->get() = std::move( tmp );
     }
