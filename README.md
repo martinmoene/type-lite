@@ -155,7 +155,7 @@ The following steps assume that the [*type* source code](https://github.com/mart
 
 2. Configure CMake to use the compiler of your choice (run `cmake --help` for a list).
 
-        cmake -G "Unix Makefiles" ..
+        cmake -G "Unix Makefiles" -DTYPE_OPT_BUILD_TESTS=ON ..
 
 3. Build the test suite.    
 
