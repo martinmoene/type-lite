@@ -22,20 +22,26 @@
 
 // (none)
 
-// Compiler detection (C++20 is speculative):
-// Note: MSVC supports C++14 since it supports C++17.
+// C++ language version detection (C++20 is speculative):
+// Note: VC14.0/1900 (VS2015) lacks too much from C++14.
 
-#ifdef _MSVC_LANG
-# define type_MSVC_LANG  _MSVC_LANG
-#else
-# define type_MSVC_LANG  0
+#ifndef   type_CPLUSPLUS
+# if defined(_MSVC_LANG ) && !defined(__clang__)
+#  define type_CPLUSPLUS  (_MSC_VER == 1900 ? 201103L : _MSVC_LANG )
+# else
+#  define type_CPLUSPLUS  __cplusplus
+# endif
 #endif
 
-#define type_CPP11             (__cplusplus == 201103L )
-#define type_CPP11_OR_GREATER  (__cplusplus >= 201103L || type_MSVC_LANG >= 201103L )
-#define type_CPP14_OR_GREATER  (__cplusplus >= 201402L || type_MSVC_LANG >= 201703L )
-#define type_CPP17_OR_GREATER  (__cplusplus >= 201703L || type_MSVC_LANG >= 201703L )
-#define type_CPP20_OR_GREATER  (__cplusplus >= 202000L || type_MSVC_LANG >= 202000L )
+#define type_CPP98_OR_GREATER  ( type_CPLUSPLUS >= 199711L )
+#define type_CPP11_OR_GREATER  ( type_CPLUSPLUS >= 201103L )
+#define type_CPP11_OR_GREATER_ ( type_CPLUSPLUS >= 201103L )
+#define type_CPP14_OR_GREATER  ( type_CPLUSPLUS >= 201402L )
+#define type_CPP17_OR_GREATER  ( type_CPLUSPLUS >= 201703L )
+#define type_CPP20_OR_GREATER  ( type_CPLUSPLUS >= 202000L )
+
+// half-open range [lo..hi):
+#define type_BETWEEN( v, lo, hi ) ( (lo) <= (v) && (v) < (hi) )
 
 // Compiler versions:
 //
@@ -72,85 +78,83 @@
 # define type_COMPILER_GNUC_VERSION    0
 #endif
 
-// half-open range [lo..hi):
-#define type_BETWEEN( v, lo, hi ) ( (lo) <= (v) && (v) < (hi) )
+// Presence of language and library features:
 
-// Presence of C++11 language features:
-
-#if type_CPP11_OR_GREATER || type_COMPILER_MSVC_VERSION >= 140
-# define type_HAVE_ALIAS_TEMPLATE  1
-# define type_HAVE_CONSTEXPR_11  1
-# define type_HAVE_EXPLICIT_CONVERSION  1
-# define type_HAVE_INLINE_NAMESPACE  1
-# define type_HAVE_IS_DEFAULT  1
-# define type_HAVE_IS_DELETE  1
-# define type_HAVE_NOEXCEPT  1
-# define type_HAVE_REF_QUALIFIER  1
-# define type_HAVE_UNICODE_LITERALS  1
-# define type_HAVE_USER_DEFINED_LITERALS  1
-# if ! ( ( type_CPP11 && type_COMPILER_CLANG_VERSION ) || type_BETWEEN( type_COMPILER_CLANG_VERSION, 300, 400 ) )
-#  define type_HAVE_STD_DEFINED_LITERALS  1
-# endif
+#ifdef _HAS_CPP0X
+# define type_HAS_CPP0X  _HAS_CPP0X
+#else
+# define type_HAS_CPP0X  0
 #endif
 
-// Presence of C++14 language features:
+// Unless defined otherwise below, consider VC14 as C++11 for type:
 
-#if type_CPP14_OR_GREATER
-# define type_HAVE_CONSTEXPR_14  1
-#endif
-
-// For the rest, consider VC14 as C++11 for optional-lite:
-
-#if      type_COMPILER_MSVC_VERSION >= 140
+#if type_COMPILER_MSVC_VER >= 1900
 # undef  type_CPP11_OR_GREATER
 # define type_CPP11_OR_GREATER  1
 #endif
 
+#define type_CPP11_90   (type_CPP11_OR_GREATER_ || type_COMPILER_MSVC_VER >= 1500)
+#define type_CPP11_100  (type_CPP11_OR_GREATER_ || type_COMPILER_MSVC_VER >= 1600)
+#define type_CPP11_110  (type_CPP11_OR_GREATER_ || type_COMPILER_MSVC_VER >= 1700)
+#define type_CPP11_120  (type_CPP11_OR_GREATER_ || type_COMPILER_MSVC_VER >= 1800)
+#define type_CPP11_140  (type_CPP11_OR_GREATER_ || type_COMPILER_MSVC_VER >= 1900)
+#define type_CPP11_141  (type_CPP11_OR_GREATER_ || type_COMPILER_MSVC_VER >= 1910)
+
+#define type_CPP14_000  (type_CPP14_OR_GREATER)
+#define type_CPP17_000  (type_CPP17_OR_GREATER)
+
+// Presence of C++11 language features:
+
+#define type_HAVE_CONSTEXPR_11          type_CPP11_140
+#define type_HAVE_EXPLICIT_CONVERSION   type_CPP11_140
+#define type_HAVE_IS_DELETE             type_CPP11_140
+#define type_HAVE_NOEXCEPT              type_CPP11_140
+
+// Presence of C++14 language features:
+
+#define type_HAVE_CONSTEXPR_14          type_CPP14_000
+
+// Presence of C++17 language features:
+
+// no flag
+
 // Presence of C++ library features:
 
-#if type_CPP11_OR_GREATER || type_COMPILER_MSVC_VERSION >= 120
-# define type_HAVE_STD_HASH  1
-#endif
+#define type_HAVE_STD_HASH              type_CPP11_120
 
 // C++ feature usage:
 
-#if      type_HAVE_CONSTEXPR_11
+#if type_HAVE_CONSTEXPR_11
 # define type_constexpr  constexpr
 #else
 # define type_constexpr  /*constexpr*/
 #endif
 
-#if      type_HAVE_CONSTEXPR_14
+#if type_HAVE_CONSTEXPR_14
 # define type_constexpr14  constexpr
 #else
 # define type_constexpr14  /*constexpr*/
 #endif
 
-#if      type_HAVE_EXPLICIT_CONVERSION
+#if type_HAVE_EXPLICIT_CONVERSION
 # define type_explicit  explicit
 #else
 # define type_explicit  /*explicit*/
 #endif
 
-#if      type_HAVE_INLINE_NAMESPACE
-# define type_inline_ns  inline
-#else
-# define type_inline_ns  /*inline*/
-#endif
-
-#if      type_HAVE_IS_DELETE
+#if type_HAVE_IS_DELETE
 # define type_is_delete = delete
 #else
 # define type_is_delete
 #endif
 
-#if      type_HAVE_IS_DELETE
+#if type_HAVE_IS_DELETE
 # define type_is_delete_access public
 #else
 # define type_is_delete_access private
 #endif
 
-#if      type_HAVE_NOEXCEPT
+#if type_HAVE_NOEXCEPT
 # define type_noexcept  noexcept
 #else
 # define type_noexcept  /*noexcept*/
