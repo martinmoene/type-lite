@@ -13,6 +13,8 @@
 #include <cstdlib>
 #include <vector>
 
+using namespace nonstd;
+
 namespace {
 
 using namespace nonstd;
