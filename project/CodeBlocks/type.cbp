@@ -29,6 +29,7 @@
 		<Unit filename="../../test/lest_cpp03.hpp" />
 		<Unit filename="../../test/t-std.bat" />
 		<Unit filename="../../test/t.bat" />
+		<Unit filename="../../test/tc.bat" />
 		<Unit filename="../../test/tg.bat" />
 		<Unit filename="../../test/type-main.t.cpp" />
 		<Unit filename="../../test/type-main.t.hpp" />
