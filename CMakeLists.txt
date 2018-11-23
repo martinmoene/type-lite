@@ -5,16 +5,24 @@
 
 cmake_minimum_required( VERSION 3.5 )
 
-# type version, updated by script/update-version.py:
+# type project and version, updated by script/update-version.py:
+
+project( type LANGUAGES CXX )
 
 set( type_version "0.0.0" )
 
+# Toplevel or subproject:
+
+if ( CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR )
+    set( type_IS_TOPLEVEL_PROJECT TRUE )
+else()
+    set( type_IS_TOPLEVEL_PROJECT FALSE )
+endif()
+
 # At default, enable building and performing of tests and building of examples:
 
-option( TYPE_OPT_BUILD_TESTS    "Build and perform type tests" OFF )
+option( TYPE_OPT_BUILD_TESTS    "Build and perform type tests" ${type_IS_TOPLEVEL_PROJECT} )
 option( TYPE_OPT_BUILD_EXAMPLES "Build type examples" OFF )
-
-project( type LANGUAGES CXX )
 
 include( GNUInstallDirs )
 
