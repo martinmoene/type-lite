@@ -1,5 +1,7 @@
 # Copyright 2018 by Martin Moene
 #
+# https://github.com/martinmoene/type
+#
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
@@ -7,9 +9,14 @@ cmake_minimum_required( VERSION 3.5 )
 
 # type project and version, updated by script/update-version.py:
 
-project( type LANGUAGES CXX )
+project(
+    type
+    VERSION 0.0.0
+    DESCRIPTION "Strong types for C++98, C++11 and later in a single-file header-only library"
+#   HOMEPAGE_URL "https://github.com/martinmoene/type"
+    LANGUAGES CXX )
 
-set( type_version "0.0.0" )
+set( ${PROJECT_NAME}_version "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}" )
 
 # Toplevel or subproject:
 
@@ -19,7 +26,7 @@ else()
     set( type_IS_TOPLEVEL_PROJECT FALSE )
 endif()
 
-# At default, enable building and performing of tests and building of examples:
+# If toplevel project, enable building and performing of tests, disable building of examples:
 
 option( TYPE_OPT_BUILD_TESTS    "Build and perform type tests" ${type_IS_TOPLEVEL_PROJECT} )
 option( TYPE_OPT_BUILD_EXAMPLES "Build type examples" OFF )
