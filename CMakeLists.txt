@@ -12,7 +12,7 @@ cmake_minimum_required( VERSION 3.5 )
 project(
     type
     VERSION 0.0.0
-    DESCRIPTION "Strong types for C++98, C++11 and later in a single-file header-only library"
+#   DESCRIPTION "Strong types for C++98, C++11 and later in a single-file header-only library"
 #   HOMEPAGE_URL "https://github.com/martinmoene/type"
     LANGUAGES CXX )
 
