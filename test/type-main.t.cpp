@@ -2,7 +2,7 @@
 //
 // https://github.com/martinmoene/type
 //
-// Distributed under the Boost Software License, Version 1.0. 
+// Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include "type-main.t.hpp"
@@ -76,15 +76,15 @@ int main( int argc, char * argv[] )
 }
 
 #if 0
-g++            -I../include/nonstd -o type.t.exe type.t.cpp && type.t.exe --pass
-g++ -std=c++98 -I../include/nonstd -o type.t.exe type.t.cpp && type.t.exe --pass
-g++ -std=c++03 -I../include/nonstd -o type.t.exe type.t.cpp && type.t.exe --pass
-g++ -std=c++0x -I../include/nonstd -o type.t.exe type.t.cpp && type.t.exe --pass
-g++ -std=c++11 -I../include/nonstd -o type.t.exe type.t.cpp && type.t.exe --pass
-g++ -std=c++14 -I../include/nonstd -o type.t.exe type.t.cpp && type.t.exe --pass
-g++ -std=c++17 -I../include/nonstd -o type.t.exe type.t.cpp && type.t.exe --pass
+g++            -I../include -o type.t.exe type.t.cpp && type.t.exe --pass
+g++ -std=c++98 -I../include -o type.t.exe type.t.cpp && type.t.exe --pass
+g++ -std=c++03 -I../include -o type.t.exe type.t.cpp && type.t.exe --pass
+g++ -std=c++0x -I../include -o type.t.exe type.t.cpp && type.t.exe --pass
+g++ -std=c++11 -I../include -o type.t.exe type.t.cpp && type.t.exe --pass
+g++ -std=c++14 -I../include -o type.t.exe type.t.cpp && type.t.exe --pass
+g++ -std=c++17 -I../include -o type.t.exe type.t.cpp && type.t.exe --pass
 
-cl -EHsc -I../include/nonstd type.t.cpp && type.t.exe --pass
+cl -EHsc -I../include type.t.cpp && type.t.exe --pass
 #endif
 
 // end of file
