@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Type" />
+		<Option title="Type Lite" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="default">
@@ -22,6 +22,7 @@
 		<Unit filename="../../example/01-basic.cpp" />
 		<Unit filename="../../example/05-function.cpp" />
 		<Unit filename="../../include/nonstd/type.hpp" />
+		<Unit filename="../../script/create-vcpkg.py" />
 		<Unit filename="../../script/update-version.py" />
 		<Unit filename="../../script/upload-conan.py" />
 		<Unit filename="../../spike/main.cpp" />
