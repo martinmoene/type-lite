@@ -177,6 +177,7 @@ Other implementations of strong types
 - Martin Moene. [WholeValue](https://github.com/martinmoene/WholeValue) on GitHub, since 2012.
 - Boost.Serialization. [Boost Strong Typedef](http://www.boost.org/doc/libs/1_61_0/libs/serialization/doc/strong_typedef.html). Boost 1.61.0. 
 
+
 Notes and references
 --------------------
 *Blogs*
@@ -193,9 +194,15 @@ Notes and references
 *Proposals*
 - Walter E. Brown. [N3515 - Toward Opaque Typedefs for C++1Y, v2](https://wg21.link/n3741). 30 August 2013.
 
+
 Appendix
 --------
-### A.1 *type* test specification
+
+### A.1 Compile-time information
+
+The version of *type lite* is available via tag `[.version]`. The following tags are available for information on the compiler and on the C++ standard library used: `[.compiler]`, `[.stdc++]`, `[.stdlanguage]` and `[.stdlibrary]`.
+
+### A.2 Type lite test specification
 
 ```
 ```
