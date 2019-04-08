@@ -3,7 +3,7 @@
 // type, strong types for C++98 and later.
 // For more information see https://github.com/martinmoene/type
 //
-// Distributed under the Boost Software License, Version 1.0. 
+// Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #ifndef NONSTD_TYPE_HPP_INCLUDED
@@ -64,7 +64,7 @@
 # define type_COMPILER_MSVC_VERSION  0
 #endif
 
-#define type_COMPILER_VERSION( major, minor, patch )  (10 * ( 10 * major + minor) + patch)
+#define type_COMPILER_VERSION( major, minor, patch )  ( 10 * ( 10 * (major) + (minor) ) + (patch) )
 
 #if defined(__clang__)
 # define type_COMPILER_CLANG_VERSION  type_COMPILER_VERSION(__clang_major__, __clang_minor__, __clang_patchlevel__)
@@ -207,9 +207,9 @@
         return type_type( function( x.get() ) );    \
     }
 
-// For C++11 and later, put default with move constructor, 
+// For C++11 and later, put default with move constructor,
 // otherwise put it with the copy constructor.
-    
+
 #if type_CPP11_OR_GREATER
 # define type_DEFAULT98( expr )
 #else
