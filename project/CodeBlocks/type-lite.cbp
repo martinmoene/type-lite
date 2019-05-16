@@ -18,6 +18,7 @@
 		<Unit filename="../../LICENSE.txt" />
 		<Unit filename="../../README.md" />
 		<Unit filename="../../appveyor.yml" />
+		<Unit filename="../../cmake/type-config-version.cmake.in" />
 		<Unit filename="../../cmake/type-config.cmake.in" />
 		<Unit filename="../../example/01-basic.cpp" />
 		<Unit filename="../../example/05-function.cpp" />

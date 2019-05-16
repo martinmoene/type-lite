@@ -247,6 +247,8 @@ template< typename R, typename T = R, typename U = R > struct modulus    { frien
 
 // Bitwise operations based on operator X=():
 
+template< typename R, typename T = R > struct bit_not{ friend type_constexpr14 R operator~( T const & x ) { return R( ~ x.get() ); } };
+
 template< typename R, typename T = R, typename U = R > struct bit_and { friend type_constexpr14 R operator&( T x, U const & y ) { return x &= y; } };
 template< typename R, typename T = R, typename U = R > struct bit_or  { friend type_constexpr14 R operator|( T x, U const & y ) { return x |= y; } };
 template< typename R, typename T = R, typename U = R > struct bit_xor { friend type_constexpr14 R operator^( T x, U const & y ) { return x ^= y; } };
@@ -411,6 +413,7 @@ struct equality
 template< typename T, typename Tag, typename D = T >
 struct bits
     : equality< T,Tag,D >
+    , bit_not < bits<T,Tag,D> >
     , bit_and < bits<T,Tag,D> >
     , bit_or  < bits<T,Tag,D> >
     , bit_xor < bits<T,Tag,D> >

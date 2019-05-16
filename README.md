@@ -1,6 +1,6 @@
 # type: A tiny single-file header-only library for strong types for C++98, C++11 and later 
 
-[![Language](https://img.shields.io/badge/C%2B%2B-98/11/14/17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization) [![License](https://img.shields.io/badge/license-BSL-blue.svg)](https://opensource.org/licenses/BSL-1.0) [![Build Status](https://travis-ci.org/martinmoene/type.svg?branch=master)](https://travis-ci.org/martinmoene/type) [![Build status](https://ci.appveyor.com/api/projects/status/1ha3wnxtam547m8p?svg=true)](https://ci.appveyor.com/project/martinmoene/type) [![Version](https://badge.fury.io/gh/martinmoene%2Ftype.svg)](https://github.com/martinmoene/type/releases) [![download](https://img.shields.io/badge/latest-download-blue.svg)](https://github.com/martinmoene/type/blob/master/include/nonstd/type.hpp) [![Conan](https://img.shields.io/badge/on-conan-blue.svg)](https://bintray.com/martinmoene/nonstd-lite/type-lite%3Anonstd-lite/_latestVersion) [![Try it on wandbox](https://img.shields.io/badge/on-wandbox-blue.svg)](https://wandbox.org/permlink/pGGPF1Sp3vdCpJXe) [![Try it on godbolt online](https://img.shields.io/badge/on-godbolt-blue.svg)](http://bit.ly/mm-type-godbolt)
+[![Language](https://img.shields.io/badge/C%2B%2B-98/11/14/17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization) [![License](https://img.shields.io/badge/license-BSL-blue.svg)](https://opensource.org/licenses/BSL-1.0) [![Build Status](https://travis-ci.org/martinmoene/type-lite.svg?branch=master)](https://travis-ci.org/martinmoene/type-lite) [![Build status](https://ci.appveyor.com/api/projects/status/1ha3wnxtam547m8p?svg=true)](https://ci.appveyor.com/project/martinmoene/type-lite) [![Version](https://badge.fury.io/gh/martinmoene%2Ftype-lite.svg)](https://github.com/martinmoene/type-lite/releases) [![download](https://img.shields.io/badge/latest-download-blue.svg)](https://github.com/martinmoene/type-lite/blob/master/include/nonstd/type.hpp) [![Conan](https://img.shields.io/badge/on-conan-blue.svg)](https://bintray.com/martinmoene/nonstd-lite/type-lite%3Anonstd-lite/_latestVersion) [![Try it on wandbox](https://img.shields.io/badge/on-wandbox-blue.svg)](https://wandbox.org/permlink/pGGPF1Sp3vdCpJXe) [![Try it on godbolt online](https://img.shields.io/badge/on-godbolt-blue.svg)](http://bit.ly/mm-type-godbolt)
 
 **Contents**  
 - [Example usage](#example-usage)
@@ -83,9 +83,9 @@ Synopsis
 |-----------------------|-------|--------------------|
 | **Types**             |&nbsp; | . |
 | type                  |&nbsp; | none |
-| bits                  |&nbsp; | &amp;, &brvbar;, ^, <<, >>, &amp;=, &brvbar;=, ^=, <<=, >>= |
+| bits                  |&nbsp; | ~, &amp;, &brvbar;, ^, <<, >>, &amp;=, &brvbar;=, ^=, <<=, >>= |
 | boolean               |&nbsp; | explicit bool conversion, see [note 1](#note1) |
-| logical               |&nbsp; | ~, &amp;&amp;, &brvbar;&brvbar; |
+| logical               |&nbsp; | !, &amp;&amp;, &brvbar;&brvbar; |
 | equality              |&nbsp; | ==, != |
 | ordered               |&nbsp; | < <= >= > |
 | numeric               |&nbsp; | unary +, unary -, ++, --, +, -, *, /, %, +=, -=, *=, /=, %= |

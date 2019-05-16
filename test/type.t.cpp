@@ -4,7 +4,7 @@
 //
 // https://github.com/martinmoene/type
 //
-// Distributed under the Boost Software License, Version 1.0. 
+// Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 #include "type-main.t.hpp"
@@ -97,6 +97,8 @@ CASE("")
     Bits a(0x1), b(0x2);
 
     Bits c = a | b;
+
+    Bits d = ~c;
 
     Bits::underlying_type ut(1);
 
