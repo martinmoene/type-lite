@@ -69,11 +69,6 @@ CASE("type_DEFINE_FUNCTION")
     std::cout << "abs( Num(-7) ): " << abs( Num(-7) ) << "\n";
 }
 
-struct ExBoolTag;
-struct ExBoolTag2;
-struct IntTag;
-struct AddressTag;
-
 typedef bits< unsigned short, struct BitsTag > Bits;
 
 typedef address< int *, std::ptrdiff_t, struct AddressTag > Address;
@@ -105,7 +100,7 @@ CASE("")
     foo();
 
     Int i(-42);
-    Int j(( type<int,IntTag,no_default_t>( 3 ) ));
+    Int j(( type<int,struct IntTag,no_default_t>( 3 ) ));
     Int k(( abs( j ) ));
     j = i;
 //    Int j( abs( i ) );
