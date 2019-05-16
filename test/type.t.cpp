@@ -81,6 +81,9 @@ type_constexpr14 void foo()
     swap( a, b );
 }
 
+typedef nonstd::boolean< struct ExBoolTag  > ExplicitBool;
+typedef nonstd::boolean< struct ExBoolTag2 > ExplicitBool2;
+
 typedef numeric< int, struct IntTag, no_default_t > Int;
 typedef numeric< int, struct IntTag               > DefInt;
 
@@ -114,9 +117,6 @@ CASE("")
     i++;
     bool _ = i != i;
 
-    typedef nonstd::boolean< struct ExBoolTag  > ExplicitBool;
-    typedef nonstd::boolean< struct ExBoolTag2 > ExplicitBool2;
-
     ExplicitBool  eb(true);
     ExplicitBool2 eb2(true);
 
@@ -124,9 +124,12 @@ CASE("")
 
     eb = ExplicitBool(false);
 
+    eb = !eb;
+
 //    int x = eb;
 
     bool result  = eb == eb;
+    bool result2  = !(eb == eb);
 //    bool result2 = eb == eb2;
 
     Address address( NULL );

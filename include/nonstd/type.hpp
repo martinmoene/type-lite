@@ -199,9 +199,18 @@
     };
 
 /**
- * define a function for given type.
+ * define a function for given type, non-constexpr.
  */
 #define type_DEFINE_FUNCTION( type_type, type_function, function ) \
+    inline type_type type_function( type_type const & x )   \
+    {   \
+        return type_type( function( x.get() ) );    \
+    }
+
+/**
+ * define a function for given type, constexpr.
+ */
+#define type_DEFINE_FUNCTION_CE( type_type, type_function, function ) \
     inline type_constexpr14 type_type type_function( type_type const & x )   \
     {   \
         return type_type( function( x.get() ) );    \
@@ -221,12 +230,12 @@ namespace nonstd { namespace types {
 // EqualityComparable, comparation functions based on operator==() and operator<():
 
 template< typename T, typename U = T > struct is_eq   { friend type_constexpr14 bool operator==( T const & x, U const & y ) { return x.get() == y.get(); } };
-template< typename T, typename U = T > struct is_lt   { friend type_constexpr14 bool operator==( T const & x, U const & y ) { return x.get() <  y.get();  } };
+template< typename T, typename U = T > struct is_lt   { friend type_constexpr14 bool operator==( T const & x, U const & y ) { return x.get() <  y.get(); } };
 
 template< typename T, typename U = T > struct is_ne   { friend type_constexpr14 bool operator!=( T const & x, U const & y ) { return ! ( x == y ); } };
-template< typename T, typename U = T > struct is_lteq { friend type_constexpr14 bool operator> ( T const & x, U const & y ) { return     y < x;    } };
-template< typename T, typename U = T > struct is_gt   { friend type_constexpr14 bool operator<=( T const & x, U const & y ) { return ! ( y < x ); } };
-template< typename T, typename U = T > struct is_gteq { friend type_constexpr14 bool operator>=( T const & x, U const & y ) { return ! ( x < y ); } };
+template< typename T, typename U = T > struct is_lteq { friend type_constexpr14 bool operator> ( T const & x, U const & y ) { return     y <  x;   } };
+template< typename T, typename U = T > struct is_gt   { friend type_constexpr14 bool operator<=( T const & x, U const & y ) { return ! ( y <  x ); } };
+template< typename T, typename U = T > struct is_gteq { friend type_constexpr14 bool operator>=( T const & x, U const & y ) { return ! ( x <  y ); } };
 
 // Logical operations:
 
@@ -247,7 +256,7 @@ template< typename R, typename T = R, typename U = R > struct modulus    { frien
 
 // Bitwise operations based on operator X=():
 
-template< typename R, typename T = R > struct bit_not{ friend type_constexpr14 R operator~( T const & x ) { return R( ~ x.get() ); } };
+//template< typename R, typename T = R > struct bit_not{ friend type_constexpr14 R operator~( T const & x ) { return ~x; }; };
 
 template< typename R, typename T = R, typename U = R > struct bit_and { friend type_constexpr14 R operator&( T x, U const & y ) { return x &= y; } };
 template< typename R, typename T = R, typename U = R > struct bit_or  { friend type_constexpr14 R operator|( T x, U const & y ) { return x |= y; } };
@@ -326,6 +335,7 @@ struct boolean
     : type < bool,Tag,D >
     , is_eq< boolean<Tag,D> >
     , is_ne< boolean<Tag,D> >
+    , logical_not< boolean<Tag,D> >
 {
 private:
     // explicit boolean operator return type.
@@ -413,7 +423,7 @@ struct equality
 template< typename T, typename Tag, typename D = T >
 struct bits
     : equality< T,Tag,D >
-    , bit_not < bits<T,Tag,D> >
+//  , bit_not < bits<T,Tag,D> >
     , bit_and < bits<T,Tag,D> >
     , bit_or  < bits<T,Tag,D> >
     , bit_xor < bits<T,Tag,D> >
@@ -434,9 +444,11 @@ struct bits
         : equality<T,Tag,D>( other.get() )
     {}
 
-    type_constexpr14 bits & operator^=( bits const & other ) { this->get() ^= other.get(); return *this; }
-    type_constexpr14 bits & operator&=( bits const & other ) { this->get() &= other.get(); return *this; }
-    type_constexpr14 bits & operator|=( bits const & other ) { this->get() |= other.get(); return *this; }
+    type_constexpr14 bits   operator~ () { return bits( static_cast<T>( ~this->get() ) ); }
+
+    type_constexpr14 bits & operator^=( bits const & other ) { this->get() = this->get() ^ other.get(); return *this; }
+    type_constexpr14 bits & operator&=( bits const & other ) { this->get() = this->get() & other.get(); return *this; }
+    type_constexpr14 bits & operator|=( bits const & other ) { this->get() = this->get() | other.get(); return *this; }
 
     type_constexpr14 bits & operator<<=( int const n ) { this->get() <<= n; return *this; }
     type_constexpr14 bits & operator>>=( int const n ) { this->get() >>= n; return *this; }

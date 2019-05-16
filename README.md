@@ -104,6 +104,7 @@ Synopsis
 | type_DEFINE_SUBTYPE |&nbsp; | . |
 | type_DEFINE_SUBTYPE_DEFAULT |&nbsp; | . |
 | type_DEFINE_FUNCTION |&nbsp; | &nbsp; |
+| type_DEFINE_FUNCTION_CE |&nbsp; | &nbsp; |
 
 <a id="note1"></a>Note 1: On Windows, ...(completely specify)... `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
 
