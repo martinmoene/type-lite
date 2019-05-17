@@ -83,15 +83,15 @@ Synopsis
 |-----------------------|-------|--------------------|
 | **Types**             |&nbsp; | . |
 | type                  |&nbsp; | none |
-| bits                  |&nbsp; | ~, &amp;, &brvbar;, ^, <<, >>, &amp;=, &brvbar;=, ^=, <<=, >>= |
+| bits                  |&nbsp; | ~&ensp;&amp;&ensp;&brvbar;&ensp;^&ensp;<<&ensp;>>&ensp;&amp;=&ensp;&brvbar;=&ensp;^=&ensp;<<=&ensp;>>= |
 | boolean               |&nbsp; | explicit bool conversion, see [note 1](#note1) |
-| logical               |&nbsp; | !, &amp;&amp;, &brvbar;&brvbar; |
-| equality              |&nbsp; | ==, != |
-| ordered               |&nbsp; | < <= >= > |
-| numeric               |&nbsp; | unary +, unary -, ++, --, +, -, *, /, %, +=, -=, *=, /=, %= |
-| quantity              |&nbsp; | as numeric, but with q / q &rarr; T, T &times; q, q &times; T, q / T |
-| offset                |&nbsp; | as ordered, o + o, o - o |
-| address               |&nbsp; | as ordered, a + o, o + a, a - o  |
+| logical               |&nbsp; | !&ensp;&amp;&amp;&ensp;&brvbar;&brvbar; |
+| equality              |&nbsp; | ==&ensp;!= |
+| ordered               |&nbsp; | equality&ensp;<&ensp;<=&ensp;>=&ensp;> |
+| numeric               |&nbsp; | ordered&ensp;unary+&ensp;unary-&ensp;++&ensp;--&ensp;+&ensp;-&ensp;*&ensp;/&ensp;%&ensp;+=&ensp;-=&ensp;*=&ensp;/=&ensp;%= |
+| quantity              |&nbsp; | numeric with&ensp;q&thinsp;/&thinsp;q &rarr; T&ensp;T&thinsp;&times;&thinsp;q&ensp;q&thinsp;&times;&thinsp;T&ensp;q&thinsp;/&thinsp;T |
+| offset                |&nbsp; | ordered&ensp;o&thinsp;+&thinsp;o&ensp;o&thinsp;-&thinsp;o |
+| address               |&nbsp; | ordered&ensp;a&thinsp;+&thinsp;o&ensp;o&thinsp;+&thinsp;a&ensp;a&thinsp;-&thinsp;o  |
 | &nbsp;                |&nbsp; | &nbsp; |
 | **Free functions**    |&nbsp; | . |
 | abs                   |&nbsp; | &nbsp; |
