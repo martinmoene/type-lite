@@ -538,7 +538,7 @@ struct quantity
 
 #if type_CPP11_OR_GREATER
     type_constexpr explicit quantity( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : numeric<T,D>( std::move( v ) )
+        : numeric<T,Tag,D>( std::move( v ) )
     {}
 #endif
 
