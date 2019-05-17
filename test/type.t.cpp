@@ -13,51 +13,188 @@
 #include <cstdlib>
 #include <vector>
 
-using namespace nonstd;
+#ifndef  type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+# define type_CONFIG_CONFIRMS_COMPILATION_ERRORS  0
+#endif
 
 namespace {
 
 using namespace nonstd;
 
-CASE( "type: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "type: Allows to default-construct a type thus defined" ){}
-CASE( "type: Allows to construct a type from its underlying type" ){}
+struct Tag;
 
-CASE( "boolean: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "boolean: Allows to default-construct a type thus defined" ){}
-CASE( "boolean: Allows to construct a type from its underlying type" ){}
+CASE( "type: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    type< int, struct Tag, no_default_t > x;
+#endif
+}
 
-CASE( "logical: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "logical: Allows to default-construct a type thus defined" ){}
-CASE( "logical: Allows to construct a type from its underlying type" ){}
+CASE( "type: Allows to default-construct a type thus defined" )
+{
+    type< int, struct Tag > x;
+}
 
-CASE( "equality: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "equality: Allows to default-construct a type thus defined" ){}
-CASE( "equality: Allows to construct a type from its underlying type" ){}
+CASE( "type: Allows to construct a type from its underlying type" )
+{
+    type< char, struct Tag > x('y');
+}
 
-CASE( "bits: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "bits: Allows to default-construct a type thus defined" ){}
-CASE( "bits: Allows to construct a type from its underlying type" ){}
+CASE( "boolean: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    nonstd::boolean< struct Tag, no_default_t > x;
+#endif
+}
 
-CASE( "ordered: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "ordered: Allows to default-construct a type thus defined" ){}
-CASE( "ordered: Allows to construct a type from its underlying type" ){}
+CASE( "boolean: Allows to default-construct a type thus defined" )
+{
+    nonstd::boolean< struct Tag > x;
+}
 
-CASE( "numeric: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "numeric: Allows to default-construct a type thus defined" ){}
-CASE( "numeric: Allows to construct a type from its underlying type" ){}
+CASE( "boolean: Allows to construct a type from its underlying type" )
+{
+    nonstd::boolean< struct Tag > x( true );
+}
 
-CASE( "quantity: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "quantity: Allows to default-construct a type thus defined" ){}
-CASE( "quantity: Allows to construct a type from its underlying type" ){}
+CASE( "logical: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    logical< int, struct Tag, no_default_t > x;
+#endif
+}
 
-CASE( "address: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "address: Allows to default-construct a type thus defined" ){}
-CASE( "address: Allows to construct a type from its underlying type" ){}
+CASE( "logical: Allows to default-construct a type thus defined" )
+{
+    logical< int, struct Tag > x;
+}
 
-CASE( "offset: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" ){}
-CASE( "offset: Allows to default-construct a type thus defined" ){}
-CASE( "offset: Allows to construct a type from its underlying type" ){}
+CASE( "logical: Allows to construct a type from its underlying type" )
+{
+    logical< int, struct Tag > x( 7 );
+}
+
+CASE( "equality: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    equality< int, struct Tag, no_default_t > x;
+#endif
+}
+
+CASE( "equality: Allows to default-construct a type thus defined" )
+{
+    equality< int, struct Tag > x;
+}
+
+CASE( "equality: Allows to construct a type from its underlying type" )
+{
+    equality< int, struct Tag > x( 7 );
+}
+
+CASE( "bits: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    bits< unsigned int, struct Tag, no_default_t > x;
+#endif
+}
+
+CASE( "bits: Allows to default-construct a type thus defined" )
+{
+    bits< unsigned int, struct Tag > x;
+}
+
+CASE( "bits: Allows to construct a type from its underlying type" )
+{
+    bits< unsigned int, struct Tag > x( 0x5a5a );
+}
+
+CASE( "ordered: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    ordered< int, struct Tag, no_default_t > x;
+#endif
+}
+
+CASE( "ordered: Allows to default-construct a type thus defined" )
+{
+    ordered< int, struct Tag > x;
+}
+
+CASE( "ordered: Allows to construct a type from its underlying type" )
+{
+    ordered< int, struct Tag > x( 7 );
+}
+
+CASE( "numeric: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    numeric< int, struct Tag, no_default_t > x;
+#endif
+}
+
+CASE( "numeric: Allows to default-construct a type thus defined" )
+{
+    numeric< int, struct Tag > x;
+}
+
+CASE( "numeric: Allows to construct a type from its underlying type" )
+{
+    numeric< int, struct Tag > x( 7 );
+}
+
+CASE( "quantity: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    quantity< int, struct Tag, no_default_t > x;
+#endif
+}
+
+CASE( "quantity: Allows to default-construct a type thus defined" )
+{
+    quantity< int, struct Tag > x;
+}
+
+CASE( "quantity: Allows to construct a type from its underlying type" )
+{
+    quantity< int, struct Tag > x( 7 );
+}
+
+CASE( "address: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    address< int *, std::ptrdiff_t, struct Tag, no_default_t > x;
+#endif
+}
+
+CASE( "address: Allows to default-construct a type thus defined" )
+{
+    address< int *, std::ptrdiff_t, struct Tag > x;
+}
+
+CASE( "address: Allows to construct a type from its underlying type" )
+{
+    int i;
+    address< int *, std::ptrdiff_t, struct Tag > x( &i );
+}
+
+CASE( "offset: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
+{
+#if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
+    offset< int, struct Tag, no_default_t > x;
+#endif
+}
+
+CASE( "offset: Allows to default-construct a type thus defined" )
+{
+    offset< int, struct Tag > x;
+}
+
+CASE( "offset: Allows to construct a type from its underlying type" )
+{
+    offset< int, struct Tag > x( 7 );
+}
+
+
 
 
 type_DEFINE_TYPE( Num, numeric, int )
@@ -84,8 +221,8 @@ type_constexpr14 void foo()
 typedef nonstd::boolean< struct ExBoolTag  > ExplicitBool;
 typedef nonstd::boolean< struct ExBoolTag2 > ExplicitBool2;
 
-typedef numeric< int, struct IntTag, no_default_t > Int;
-typedef numeric< int, struct IntTag               > DefInt;
+typedef numeric< int, struct Tag, no_default_t > Int;
+typedef numeric< int, struct Tag               > DefInt;
 
 type_DEFINE_FUNCTION( Int, abs, std::abs )
 
@@ -103,7 +240,7 @@ CASE("")
     foo();
 
     Int i(-42);
-    Int j(( type<int,struct IntTag,no_default_t>( 3 ) ));
+    Int j(( type<int,struct Tag,no_default_t>( 3 ) ));
     Int k(( abs( j ) ));
     j = i;
 //    Int j( abs( i ) );
