@@ -1,4 +1,4 @@
-// Copyright 2018 Martin Moene
+// Copyright 2018-2019 Martin Moene
 //
 // type, strong types for C++98 and later.
 // For more information see https://github.com/martinmoene/type
