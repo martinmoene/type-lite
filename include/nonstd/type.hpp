@@ -164,8 +164,10 @@
 
 #if type_CPP11_OR_GREATER
 # include <functional>      // std::hash<>
-# include <utility>         // std::move()
+# include <utility>         // std::move(), std::swap()
 # include <type_traits>     // std::is_same<>
+#else
+# include <algorithm>       // std::swap()
 #endif
 
 // Method enabling
