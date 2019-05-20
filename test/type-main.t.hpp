@@ -36,7 +36,7 @@
 
 namespace lest {
 
-using ::nonstd::operator<<;
+//using ::nonstd::operator<<;
 
 } // namespace lest
 

@@ -162,13 +162,25 @@
 
 // Additional includes:
 
-#include <ostream>
-
 #if type_CPP11_OR_GREATER
 # include <functional>      // std::hash<>
 # include <utility>         // std::move()
-# include <type_traits>     // std::is_nothrow_move_constructible<>
+# include <type_traits>     // std::is_same<>
 #endif
+
+// Method enabling
+
+#define type_REQUIRES_0(...) \
+    template< bool B = (__VA_ARGS__), typename std::enable_if<B, int>::type = 0 >
+
+#define type_REQUIRES_T(...) \
+    , typename = typename std::enable_if< (__VA_ARGS__), nonstd::types::detail::enabler >::type
+
+#define type_REQUIRES_R(R, ...) \
+    typename std::enable_if< (__VA_ARGS__), R>::type
+
+#define type_REQUIRES_A(...) \
+    , typename std::enable_if< (__VA_ARGS__), void*>::type = nullptr
 
 /**
  * define a default-constructable type.
@@ -216,21 +228,22 @@
         return type_type( function( x.get() ) );    \
     }
 
-// For C++11 and later, put default with move constructor,
-// otherwise put it with the copy constructor.
-
-#if type_CPP11_OR_GREATER
-# define type_DEFAULT98( expr )
-#else
-# define type_DEFAULT98( expr )   = expr
-#endif
-
+/**
+ * implementation namespace
+ */
 namespace nonstd { namespace types {
 
-// EqualityComparable, comparation functions based on operator==() and operator<():
+namespace detail {
+
+#if type_CPP11_OR_GREATER
+enum class enabler{};
+#endif
+}
+
+// EqualityComparable, comparison functions based on operator==() and operator<():
 
 template< typename T, typename U = T > struct is_eq   { friend type_constexpr14 bool operator==( T const & x, U const & y ) { return x.get() == y.get(); } };
-template< typename T, typename U = T > struct is_lt   { friend type_constexpr14 bool operator==( T const & x, U const & y ) { return x.get() <  y.get(); } };
+template< typename T, typename U = T > struct is_lt   { friend type_constexpr14 bool operator< ( T const & x, U const & y ) { return x.get() <  y.get(); } };
 
 template< typename T, typename U = T > struct is_ne   { friend type_constexpr14 bool operator!=( T const & x, U const & y ) { return ! ( x == y ); } };
 template< typename T, typename U = T > struct is_lteq { friend type_constexpr14 bool operator> ( T const & x, U const & y ) { return     y <  x;   } };
@@ -271,40 +284,43 @@ template< typename R, typename T = R > struct bit_shr { friend type_constexpr14 
 struct no_default_t{};
 
 /**
- * data base class
+ * data base class.
  */
 template< typename T, typename D = T >
 struct data
 {
     typedef T underlying_type;
 
-    type_constexpr explicit data( T const & v type_DEFAULT98( D() ) )
-        : value( v )
+    type_constexpr data()
+        : value()
     {}
 
-#if type_CPP11_OR_GREATER
-    type_constexpr explicit data( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : value( std::move( v ) )
+#if  type_CPP11_OR_GREATER
+    type_constexpr explicit data( T v )
+        : value( std::move(v) )
+    {}
+#else
+    type_constexpr explicit data( T const & v )
+        : value( v )
     {}
 #endif
 
-    type_constexpr14 T       & get()       { return value; }
-    type_constexpr14 T const & get() const { return value; }
-
 #if type_CPP11_OR_GREATER
-    type_constexpr14 void swap( data & other )
-    {
-        T tmp{ std::move( other.get() ) };
-        other.get() = std::move( this->get() );
-        this->get() = std::move( tmp );
-    }
+    type_constexpr14 T        & get() &       { return value; }
+    type_constexpr14 T const  & get() const & { return value; }
+
+    type_constexpr14 T       && get() &&       { return std::move(value); }
+    type_constexpr14 T const && get() const && { return std::move(value); }
 #else
+    type_constexpr14 T        & get()       { return value; }
+    type_constexpr14 T const  & get() const { return value; }
+#endif
+
     void swap( data & other )
     {
         using std::swap;
-        swap( this->get(), other.get() );
+        swap( this->value, other.value );
     }
-#endif
 
 private:
     underlying_type value;
@@ -316,13 +332,22 @@ private:
 template< typename T, typename Tag, typename D = T >
 struct type : data<T,D>
 {
-    type_constexpr explicit type( T const & v type_DEFAULT98( D() ) )
-        : data<T,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0((
+        ! std::is_same<D, no_default_t>::value
+    ))
+#endif
+    type_constexpr type()
+        : data<T,D>()
     {}
 
-#if type_CPP11_OR_GREATER
-    type_constexpr explicit type( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : data<T,D>( std::move( v ) )
+#if  type_CPP11_OR_GREATER
+    type_constexpr explicit type( T v )
+        : data<T,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit type( T const & v )
+        : data<T,D>( v )
     {}
 #endif
 };
@@ -349,7 +374,11 @@ private:
 public:
     // default/initializing constructor.
 
-    type_constexpr explicit boolean( bool value = D() )
+    type_constexpr boolean()
+        : type<bool,Tag,D>()
+    {}
+
+    type_constexpr explicit boolean( bool value )
         : type<bool,Tag,D>( value )
     {}
 
@@ -378,19 +407,24 @@ struct logical
     , logical_and< type<T,Tag,D> >
     , logical_or < type<T,Tag,D> >
 {
-    type_constexpr explicit logical( T const & v type_DEFAULT98( D() ) )
-        : type<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr logical()
+        : type<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit logical( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : type<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit logical( T v  )
+        : type<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit logical( T const & v  )
+        : type<T,Tag,D>( v )
     {}
 #endif
-
-    type_constexpr logical( type<T,Tag,D> const & other )
-        : type<T,Tag,D>( other.get() )
-    {}
 };
 
 /**
@@ -402,19 +436,24 @@ struct equality
     , is_eq< equality<T,Tag,D> >
     , is_ne< equality<T,Tag,D> >
 {
-    type_constexpr explicit equality( T const & v type_DEFAULT98( D() ) )
-        : type<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr equality()
+        : type<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit equality( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : type<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit equality( T v  )
+        : type<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit equality( T const & v  )
+        : type<T,Tag,D>( v )
     {}
 #endif
-
-    type_constexpr equality( type<T,Tag,D> const & other )
-        : type<T,Tag,D>( other.get() )
-    {}
 };
 
 /**
@@ -430,19 +469,24 @@ struct bits
     , bit_shl < bits<T,Tag,D> >
     , bit_shr < bits<T,Tag,D> >
 {
-    type_constexpr explicit bits( T const & v type_DEFAULT98( D() ) )
-        : equality<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr bits()
+        : equality<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit bits( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : equality<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit bits( T v )
+        : equality<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit bits( T const & v )
+        : equality<T,Tag,D>( v )
     {}
 #endif
-
-    type_constexpr bits( type<T,Tag,D> const & other )
-        : equality<T,Tag,D>( other.get() )
-    {}
 
     type_constexpr14 bits   operator~ () { return bits( static_cast<T>( ~this->get() ) ); }
 
@@ -465,19 +509,24 @@ struct ordered
     , is_lteq < ordered<T,Tag,D> >
     , is_gteq < ordered<T,Tag,D> >
 {
-    type_constexpr explicit ordered( T const & v type_DEFAULT98( D() ) )
-        : equality<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr ordered()
+        : equality<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit ordered( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : equality<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit ordered( T v )
+        : equality<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit ordered( T const & v )
+        : equality<T,Tag,D>( v )
     {}
 #endif
-
-    type_constexpr ordered( type<T,Tag,D> const & other )
-        : equality<T,Tag,D>( other.get() )
-    {}
 };
 
 /**
@@ -492,19 +541,24 @@ struct numeric
     , divides   < numeric<T,Tag,D> >
     , modulus   < numeric<T,Tag,D> >
 {
-    type_constexpr explicit numeric( T const & v type_DEFAULT98( D() ) )
-        : ordered<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr numeric()
+        : ordered<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit numeric( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : ordered<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit numeric( T v )
+        : ordered<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit numeric( T const & v )
+        : ordered<T,Tag,D>( v )
     {}
 #endif
-
-    type_constexpr numeric( type<T,Tag,D> const & other )
-        : ordered<T,Tag,D>( other.get() )
-    {}
 
     type_constexpr14 numeric operator+() const { return *this; }
     type_constexpr14 numeric operator-() const { return numeric( -this->get() ); }
@@ -527,32 +581,43 @@ struct numeric
  */
 template< typename T, typename Tag, typename D = T >
 struct quantity
-    : numeric    < T,Tag,D >
+    : ordered    < T,Tag,D >
+    , plus       < quantity<T,Tag,D> >
+    , minus      < quantity<T,Tag,D> >
+    , modulus    < quantity<T,Tag,D> >
     , multiplies < quantity<T,Tag,D>,    quantity<T,Tag,D>, T >
     , multiplies2< quantity<T,Tag,D>, T, quantity<T,Tag,D>    >
     , divides    < quantity<T,Tag,D>,    quantity<T,Tag,D>, T >
 {
-    explicit quantity( T const & v type_DEFAULT98( D() ) )
-        : numeric<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr quantity()
+        : ordered<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit quantity( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : numeric<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit quantity( T v )
+        : ordered<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit quantity( T const & v )
+        : ordered<T,Tag,D>( v )
     {}
 #endif
 
-    type_constexpr quantity( type<T,Tag,D> const & other )
-        : numeric<T,Tag,D>( other.get() )
-    {}
+    type_constexpr14 quantity operator+() const { return *this; }
+    type_constexpr14 quantity operator-() const { return quantity( -this->get() ); }
+
+    type_constexpr14 quantity & operator+=( quantity const & other ) { this->get() += other.get(); return *this; }
+    type_constexpr14 quantity & operator-=( quantity const & other ) { this->get() -= other.get(); return *this; }
 
     type_constexpr14 quantity & operator*=( T const & y ) { return this->get() *= y, *this; }
     type_constexpr14 quantity & operator/=( T const & y ) { return this->get() /= y, *this; }
 
     type_constexpr14 T operator/( quantity const & y ) { return this->get() / y.get(); }
-
-type_is_delete_access:
-    quantity & operator*=( quantity const & ) type_is_delete;
 };
 
 /**
@@ -567,13 +632,22 @@ struct offset
     , plus   < offset<T,Tag,D> >
     , minus  < offset<T,Tag,D> >
 {
-    type_constexpr explicit offset( T const & v type_DEFAULT98( D() ) )
-        : ordered<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr offset()
+        : ordered<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit offset( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : ordered<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit offset( T v )
+        : ordered<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit offset( T const & v )
+        : ordered<T,Tag,D>( v )
     {}
 #endif
 
@@ -589,7 +663,7 @@ struct offset
  * address + offset  => address
  * address - offset  => address
  *  offset + address => address
- *  offset - address https://github.com/sxs-collaboration/spectre=> error
+ *  offset - address => error
  *  offset + offset  => offset
  *  offset - offset  => offset
  */
@@ -602,13 +676,22 @@ struct address
 {
     typedef offset<O,Tag,O> offset_type;
 
-    type_constexpr explicit address( T const & v type_DEFAULT98( D() ) )
-        : ordered<T,Tag,D>( v )
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
+    type_constexpr address()
+        : ordered<T,Tag,D>()
     {}
 
 #if type_CPP11_OR_GREATER
-    type_constexpr explicit address( T && v = D() ) noexcept( noexcept(std::is_nothrow_move_constructible<T>::value) )
-        : ordered<T,Tag,D>( std::move( v ) )
+    type_constexpr explicit address( T v )
+        : ordered<T,Tag,D>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit address( T const & v )
+        : ordered<T,Tag,D>( v )
     {}
 #endif
 
@@ -631,19 +714,22 @@ inline type_constexpr14 void swap( type<T,Tag,D> & x, type<T,Tag,D> & y )
 
 // the underlying value.
 
+#if type_CPP11_OR_GREATER
+
 template< typename T, typename Tag, typename D >
-inline type_constexpr14 typename type<T,Tag,D>::underlying_type
+inline type_constexpr14 typename type<T,Tag,D>::underlying_type &&
+to_value( type<T,Tag,D> && v )
+{
+    return std::move( v ).get();
+}
+
+#endif
+
+template< typename T, typename Tag, typename D >
+inline type_constexpr14 typename type<T,Tag,D>::underlying_type const &
 to_value( type<T,Tag,D> const & v )
 {
     return v.get();
-}
-
-// stream output.
-
-template< typename T, typename Tag, typename D >
-inline std::ostream & operator<<( std::ostream & os, type<T,Tag,D> v )
-{
-    return os << v.get();
 }
 
 }}  // namespace nonstd::types
@@ -696,8 +782,24 @@ using types::address;
 
 using types::swap;
 
-using types::operator<<;
-
 } // namespace nonstd
+
+// stream output.
+
+#if 0
+
+#include <ostream>
+
+namespace nonstd {
+
+template< typename T, typename Tag, typename D >
+inline std::ostream & operator<<( std::ostream & os, type<T,Tag,D> v )
+{
+    return os << v.get();
+}
+
+}  // namespace nonstd::types
+
+#endif
 
 #endif // NONSTD_TYPE_HPP_INCLUDED
