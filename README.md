@@ -54,7 +54,7 @@ prompt> g++ -Wall -std=c++11 -I../include -o 01-basic 01-basic.cpp && ./01-basic
 
 In a nutshell
 ---------------
-**type** ...
+**type** provides building blocks to create strong types with, such as `bits`, `numeric`, `quantity` and `address`. 
 
 **Features and properties of type** are ease of installation (single header), freedom of dependencies other than the standard library. ...
 
@@ -80,9 +80,9 @@ Synopsis
 **Contents**  
 
 | Kind                  | Std   | Operations |                                       
-|-----------------------|-------|--------------------|
-| **Types**             |&nbsp; | . |
-| type                  |&nbsp; | none |
+|-----------------------|-------|------------|
+| **Types**             |&nbsp; | &nbsp;     |
+| type                  |&nbsp; | none       |
 | bits                  |&nbsp; | ~&ensp;&amp;&ensp;&brvbar;&ensp;^&ensp;<<&ensp;>>&ensp;&amp;=&ensp;&brvbar;=&ensp;^=&ensp;<<=&ensp;>>= |
 | boolean               |&nbsp; | explicit bool conversion, see [note 1](#note1) |
 | logical               |&nbsp; | !&ensp;&amp;&amp;&ensp;&brvbar;&brvbar; |
@@ -93,20 +93,23 @@ Synopsis
 | offset                |&nbsp; | ordered&ensp;o&thinsp;+&thinsp;o&ensp;o&thinsp;-&thinsp;o&ensp;o&thinsp;+=&thinsp;o&ensp;o&thinsp;-=&thinsp;o  |
 | address               |&nbsp; | ordered&ensp;a&thinsp;+&thinsp;o&ensp;a&thinsp;-&thinsp;o&ensp;a&thinsp;+=&thinsp;o&ensp;a&thinsp;-=&thinsp;o&ensp;o&thinsp;+&thinsp;a&ensp; |
 | &nbsp;                |&nbsp; | &nbsp; |
-| **Free functions**    |&nbsp; | . |
-| abs                   |&nbsp; | &nbsp; |
-| swap                  |&nbsp; | &nbsp; |
-| [operator<<]          |&nbsp; | &nbsp; |
+| std::hash&lt;type&lt;...>>    | C++11  | hash type for `type` in namespace `std`; see `make_hash()` |
 | &nbsp;                |&nbsp; | &nbsp; |
-| **Macros**            |&nbsp; | . |
-| type_DEFINE_TYPE |&nbsp; | . |
-| type_DEFINE_TYPE_DEFAULT |&nbsp; | . |
-| type_DEFINE_SUBTYPE |&nbsp; | . |
-| type_DEFINE_SUBTYPE_DEFAULT |&nbsp; | . |
-| type_DEFINE_FUNCTION |&nbsp; | &nbsp; |
-| type_DEFINE_FUNCTION_CE |&nbsp; | &nbsp; |
+| **Free functions**    |&nbsp; | &nbsp; |
+| make_hash()           |C++11  | create hash value for an object of strong type |
+| swap()                |&nbsp; | swap two strong type objects |
+| to_value()            |&nbsp; | convert strong type object to underlying value |
+| [operator<<]          |&nbsp; | [not provided] |
+| &nbsp;                |&nbsp; | &nbsp; |
+| **Macros**            |&nbsp; | &nbsp; |
+| type_DEFINE_TYPE            |&nbsp; | Define a strong type `S`, using tag `Tag` and implementation type `T` |
+| type_DEFINE_TYPE_DEFAULT    |&nbsp; | Define a default-constructible strong type |
+| type_DEFINE_SUBTYPE         |&nbsp; | Define a subtype `U` of a strong type `S` |
+| type_DEFINE_SUBTYPE_DEFAULT |&nbsp; | Define a default-constructible subtype of a strong type |
+| type_DEFINE_FUNCTION        |&nbsp; | Adapt an existing function `f` for a strong type `S` |
+| type_DEFINE_FUNCTION_CE     |&nbsp; | Adapt an existing constexpr function `f` for a strong type `S` |
 
-<a id="note1"></a>Note 1: On Windows, ...(completely specify)... `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
+<a id="note1"></a>Note 1: On Windows, completely specify) `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
 
 ### Defining a function taking a `type`-derived type
 
@@ -124,7 +127,7 @@ type_DEFINE_FUNCTION( Integer, abs, std::abs )
 
 int main()
 {
-	 std::cout << abs( strong::Integer(-7) ) << "\n";
+    std::cout << abs( strong::Integer(-7) ) << "\n";
 }
 ```
 Compile and run:
@@ -216,6 +219,7 @@ type: Allows to copy-assign a type
 type: Allows to move-assign a type (C++11)
 type: Allows to copy-swap a type
 type: Allows to move-swap a type (C++11)
+type: Allows to obtain hash of a type object (C++11)
 boolean: Disallows to default-construct a boolean thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 boolean: Disallows to substitute booleans with different tags (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 boolean: Allows to default-construct a boolean thus defined
@@ -223,6 +227,7 @@ boolean: Allows to copy-construct a boolean from its underlying type
 boolean: Allows explicit conversion to a native bool
 boolean: Allows to negate a boolean
 boolean: Allows to compare a boolean for equality
+boolean: Allows to obtain hash of a boolean object (C++11)
 logical: Disallows to default-construct a logical thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 logical: Allows to default-construct a logical thus defined
 logical: Allows to copy-construct a logical from its underlying type
@@ -230,11 +235,13 @@ logical: Allows to move-construct a logical from its underlying type (C++11)
 logical: Allows to negate a logical
 logical: Allows to and two logicals
 logical: Allows to or two logicals
+logical: Allows to obtain hash of a logical object (C++11)
 equality: Disallows to default-construct an equality thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 equality: Allows to default-construct an equality thus defined
 equality: Allows to copy-construct an equality from its underlying type
 equality: Allows to move-construct an equality from its underlying type (C++11)
 equality: Allows to compare an equality for equality
+equality: Allows to obtain hash of an equality object (C++11)
 bits: Disallows to default-construct a bits thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 bits: Allows to default-construct a bits thus defined
 bits: Allows to copy-construct a bits from its underlying type
@@ -246,12 +253,14 @@ bits: Allows to or bits
 bits: Allows to xor bits
 bits: Allows to shift-left bits
 bits: Allows to shift-right bits
+bits: Allows to obtain hash of a bits object (C++11)
 ordered: Disallows to default-construct an ordered thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 ordered: Allows to default-construct an ordered thus defined
 ordered: Allows to copy-construct an ordered from its underlying type
 ordered: Allows to move-construct an ordered from its underlying type (C++11)
 ordered: Allows to compare an ordered for equality
 ordered: Allows to compare an ordered for order
+ordered: Allows to obtain hash of an ordered object (C++11)
 numeric: Disallows to default-construct a numeric thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 numeric: Allows to default-construct a numeric thus defined
 numeric: Allows to copy-construct a numeric from its underlying type
@@ -262,6 +271,7 @@ numeric: Allows to apply unary+, unary-
 numeric: Allows to apply pre- and post-increment and -decrement
 numeric: Allows to add, subtract, multiply, divide, rest-divide numerics (x op y)
 numeric: Allows to add, subtract, multiply, divide, rest-divide numerics (x op= y)
+numeric: Allows to obtain hash of a numeric object (C++11)
 quantity: Disallows to default-construct a quantity thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 quantity: Allows to default-construct a quantity thus defined
 quantity: Allows to copy-construct a quantity from its underlying type
@@ -275,6 +285,7 @@ quantity: Disallows to multiply a quantity with a quantity
 quantity: Allows to multiply a quantity with a scalar (result: quantity)
 quantity: Allows to divide a quantity by a scalar (result: quantity)
 quantity: Allows to divide a quantity by a quantity (result: scalar)
+quantity: Allows to obtain hash of a quantity object (C++11)
 address: Disallows to default-construct an address thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 address: Allows to default-construct an address thus defined
 address: Allows to copy-construct an address from its underlying type
@@ -286,10 +297,12 @@ address: Allows to add, subtract an offset (a += o, a -= o)
 address: Allows to an offset and an addresses (a + o, o + a)
 address: Allows to subtract an offset from an address (a - o)
 address: Disallows to subtract an addresses from an offset
+address: Allows to obtain hash of an address object (C++11)
 offset: Disallows to default-construct an offset thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 offset: Allows to default-construct an offset thus defined
 offset: Allows to copy-construct an offset from its underlying type
 offset: Allows to move-construct an offset from its underlying type (C++11)
 offset: Allows to add, subtract offsets (x op y)
 offset: Allows to add, subtract offsets (x op= y)
+offset: Allows to obtain hash of an offset object (C++11)
 ```
