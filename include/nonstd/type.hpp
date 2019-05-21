@@ -148,12 +148,6 @@
 # define type_is_delete
 #endif
 
-#if type_HAVE_IS_DELETE
-# define type_is_delete_access public
-#else
-# define type_is_delete_access private
-#endif
-
 #if type_HAVE_NOEXCEPT
 # define type_noexcept  noexcept
 #else
@@ -705,9 +699,6 @@ struct address
     type_constexpr14 address & operator-=( offset_type const & y ) { this->get() -= y.get(); return *this; }
 
     friend type_constexpr14 offset_type operator-( address const & x, address const & y ) { return offset_type( x.get() - y.get() ); }
-
-type_is_delete_access:
-    void operator+=( address const & ) type_is_delete;
 };
 
 // swap values.
