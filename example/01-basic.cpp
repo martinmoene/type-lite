@@ -31,8 +31,8 @@ public:
 constexpr bool operator<( Date a, Date b )
 {
     return a.year  < b.year
-        || a.month < b.month
-        || a.day   < b.day;
+        || a.year == b.year && a.month  < b.month
+        || a.year == b.year && a.month == b.month && a.day < b.day;
 }
 
 int main()
@@ -42,7 +42,7 @@ int main()
 //  date = Date( Day(21), July, Year(2018) );       // compile-time error
 //  date = Date( July, Day(21), Year(2018) );       // compile-time error
 
-    return Date( Year(2018), July, Day(21) )
+    return Date( Year(2019), June, Day(28) )
          < Date( Year(2019), July, Day(24) );
 }
 
