@@ -167,6 +167,7 @@ inline std::ostream & operator<<( std::ostream & os, address<T,Tag,D> const & v 
 // -----------------------------------------------------------------------
 // type:
 
+typedef type< int     , struct Tag > IntType;
 typedef type< CopyMove, struct Tag > CopyMoveType;
 typedef type< MoveOnly, struct Tag > MoveOnlyType;
 
@@ -272,6 +273,15 @@ CASE( "type: Allows to move-swap a type (C++11)" )
 #endif
 }
 
+CASE( "type: Allows to obtain hash of a type object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( IntType(7) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
+}
+
 // -----------------------------------------------------------------------
 // boolean:
 
@@ -336,6 +346,15 @@ CASE( "boolean: Allows to compare a boolean for equality" )
 
     EXPECT_NOT( x != x );
     EXPECT(     x != y );
+}
+
+CASE( "boolean: Allows to obtain hash of a boolean object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( Boolean(true) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
 }
 
 // -----------------------------------------------------------------------
@@ -407,9 +426,19 @@ CASE( "logical: Allows to or two logicals" )
     EXPECT_NOT( to_value( y || y ) );
 }
 
+CASE( "logical: Allows to obtain hash of a logical object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( BoolLogical( true ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
+}
+
 // -----------------------------------------------------------------------
 // equality:
 
+typedef equality< int     , struct Tag > IntEquality;
 typedef equality< CopyMove, struct Tag > CopyMoveEquality;
 typedef equality< MoveOnly, struct Tag > MoveOnlyEquality;
 
@@ -456,6 +485,15 @@ CASE( "equality: Allows to compare an equality for equality" )
 
     EXPECT_NOT( x != x );
     EXPECT(     x != y );
+}
+
+CASE( "equality: Allows to obtain hash of an equality object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( IntEquality( 7 ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
 }
 
 // -----------------------------------------------------------------------
@@ -593,6 +631,15 @@ CASE( "bits: Allows to shift-right bits" )
     }}
 }
 
+CASE( "bits: Allows to obtain hash of a bits object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( Bits( 7 ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
+}
+
 // -----------------------------------------------------------------------
 // ordered:
 
@@ -659,6 +706,15 @@ CASE( "ordered: Allows to compare an ordered for order" )
     EXPECT_NOT( y <= x );
     EXPECT_NOT( x >  y );
     EXPECT_NOT( x >= y );
+}
+
+CASE( "ordered: Allows to obtain hash of an ordered object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( Ordered( 7 ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
 }
 
 // -----------------------------------------------------------------------
@@ -798,6 +854,15 @@ CASE( "numeric: Allows to add, subtract, multiply, divide, rest-divide numerics 
     }}
 }
 
+CASE( "numeric: Allows to obtain hash of a numeric object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( Numeric( 7 ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
+}
+
 // -----------------------------------------------------------------------
 // quantity:
 
@@ -934,6 +999,15 @@ CASE( "quantity: Allows to divide a quantity by a quantity (result: scalar)" )
     EXPECT( y / x == (yu / xu) );
 }
 
+CASE( "quantity: Allows to obtain hash of a quantity object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( Quantity( 7 ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
+}
+
 // -----------------------------------------------------------------------
 // address:
 
@@ -1050,6 +1124,15 @@ CASE( "address: Disallows to subtract an addresses from an offset" )
     EXPECT( true );
 }
 
+CASE( "address: Allows to obtain hash of an address object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    int i;
+    EXPECT( make_hash( Address( &i ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
+}
 
 // -----------------------------------------------------------------------
 // offset:
@@ -1116,6 +1199,15 @@ CASE( "offset: Allows to add, subtract offsets (x op= y)" )
     SECTION("") {
         EXPECT( (y -= x) == Offset(9 - 7) );
     }}
+}
+
+CASE( "offset: Allows to obtain hash of an offset object (C++11)" )
+{
+#if type_CPP11_OR_GREATER
+    EXPECT( make_hash( Offset( 7 ) ) );
+#else
+    EXPECT( !!"type: std::hash is not available (no C++11)" );
+#endif
 }
 
 } // anonymous namespace

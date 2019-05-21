@@ -750,23 +750,23 @@ struct hash< nonstd::types::type<T,Tag,D> >
 public:
     std::size_t operator()( nonstd::types::type<T,Tag,D> const & v ) const type_noexcept
     {
-        return std::hash<T>( v.get() );
-    }
-};
-
-template< typename T, typename Tag, typename D >
-struct hash< nonstd::types::numeric<T,Tag,D> >
-{
-public:
-    std::size_t operator()( nonstd::types::numeric<T,Tag,D> const & v ) const type_noexcept
-    {
-        return std::hash<T>( v.get() );
+        return std::hash<T>()( v.get() );
     }
 };
 
 }  // namespace std
 
-#endif
+namespace nonstd { namespace types {
+
+template< typename T, typename Tag, typename D >
+std::size_t make_hash( type<T,Tag,D> const & v ) type_noexcept
+{
+    return std::hash<type<T,Tag,D>>()( v );
+}
+
+}}
+
+#endif // type_HAVE_STD_HASH
 
 // make type available in namespace nonstd:
 
@@ -787,7 +787,11 @@ using types::offset;
 using types::address;
 
 using types::swap;
+using types::to_value;
 
+#if type_HAVE_STD_HASH
+using types::make_hash;
+#endif
 } // namespace nonstd
 
 // stream output.
