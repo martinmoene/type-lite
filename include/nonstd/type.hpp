@@ -189,19 +189,19 @@
 #endif
 
 /**
- * define a default-constructable type.
+ * define a default-constructible type.
  */
 #define type_DEFINE_TYPE_DEFAULT( type_name, type_type, underlying_type ) \
     typedef ::nonstd::type_type<underlying_type, struct type_name##_tag> type_name;
 
 /**
- * define a non-default-constructable type.
+ * define a non-default-constructible type.
  */
 #define type_DEFINE_TYPE( type_name, type_type, underlying_type ) \
     typedef ::nonstd::type_type<underlying_type, struct type_name##_tag, ::nonstd::no_default_t> type_name;
 
 /**
- * define a default-constructable sub-type.
+ * define a default-constructible sub-type.
  */
 #define type_DEFINE_SUBTYPE_DEFAULT( sub, super ) \
     struct sub : super { \
@@ -209,7 +209,7 @@
     };
 
 /**
- * define a non-default-constructable sub-type.
+ * define a non-default-constructible sub-type.
  */
 #define type_DEFINE_SUBTYPE( sub, super ) \
     struct sub : super { \
