@@ -172,6 +172,8 @@
 
 // Method enabling
 
+#if type_CPP11_OR_GREATER
+
 #define type_REQUIRES_0(...) \
     template< bool B = (__VA_ARGS__), typename std::enable_if<B, int>::type = 0 >
 
@@ -183,6 +185,8 @@
 
 #define type_REQUIRES_A(...) \
     , typename std::enable_if< (__VA_ARGS__), void*>::type = nullptr
+
+#endif
 
 /**
  * define a default-constructable type.
