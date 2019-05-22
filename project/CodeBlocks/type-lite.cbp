@@ -21,6 +21,7 @@
 		<Unit filename="../../cmake/type-config-version.cmake.in" />
 		<Unit filename="../../cmake/type-config.cmake.in" />
 		<Unit filename="../../conanfile.py" />
+		<Unit filename="../../doc/install.md" />
 		<Unit filename="../../example/01-basic.cpp" />
 		<Unit filename="../../example/05-function.cpp" />
 		<Unit filename="../../include/nonstd/type.hpp" />

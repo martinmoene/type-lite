@@ -54,30 +54,34 @@ prompt> g++ -Wall -std=c++11 -I../include -o 01-basic 01-basic.cpp && ./01-basic
 
 In a nutshell
 ---------------
-**type** provides building blocks to create strong types with, such as `bits`, `numeric`, `quantity` and `address`. 
+**type lite** provides building blocks to create strong types with, such as `bits`, `numeric`, `quantity` and `address`. 
 
 **Features and properties of type** are ease of installation (single header), freedom of dependencies other than the standard library. ...
 
 
 License
 -------
-*type* is distributed under the [Boost Software License](LICENSE.txt).
+*type lite* is distributed under the [Boost Software License](LICENSE.txt).
  
 
 Dependencies
 ------------
-*type* has no other dependencies than the [C++ standard library](http://en.cppreference.com/w/cpp/header).
+*type lite* has no other dependencies than the [C++ standard library](http://en.cppreference.com/w/cpp/header).
 
 
 Installation
 ------------
-*type* is a single-file header-only library. Put `type.hpp` in the [include](include) folder directly into the project source tree or somewhere reachable from your project.
+*type lite* is a single-file header-only library. Here are some ways to use it:
+
+- As copied header in the [include](include) folder of the project source tree or somewhere reachable from your project.
+- [As copied header used from CMake](doc/install.md#cmake-library)
+- [As external Git project](doc/install.md#git-external)
+- [As CMake package](doc/install.md#cmake-package)
+- [As Conan package](doc/install.md#conan-package)
 
 
 Synopsis
 --------
-
-**Contents**  
 
 | Kind                  | Std   | Operations |                                       
 |-----------------------|-------|------------|
@@ -109,7 +113,7 @@ Synopsis
 | type_DEFINE_FUNCTION        |&nbsp; | Adapt an existing function `f` for a strong type `S` |
 | type_DEFINE_FUNCTION_CE     |&nbsp; | Adapt an existing constexpr function `f` for a strong type `S` |
 
-<a id="note1"></a>Note 1: On Windows, completely specify) `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
+<a id="note1"></a>Note 1: On Windows, completely specify `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
 
 ### Defining a function taking a `type`-derived type
 
@@ -150,7 +154,7 @@ To build the tests you need:
 
 The [*lest* test framework](https://github.com/martinmoene/lest) is included in the [test folder](test).
 
-The following steps assume that the [*type* source code](https://github.com/martinmoene/type) has been cloned into a directory named `./type`.
+The following steps assume that the [*type lite* source code](https://github.com/martinmoene/type) has been cloned into a directory named `./type`.
 
 1. Create a directory for the build outputs.
 
@@ -169,7 +173,7 @@ The following steps assume that the [*type* source code](https://github.com/mart
 
         ctest -V
 
-All tests should pass, indicating your platform is supported and you are ready to use *type*.
+All tests should pass, indicating your platform is supported and you are ready to use *type lite*.
 
 
 Other implementations of strong types

@@ -19,7 +19,15 @@ import sys
 
 table = (
     # path, substitute find, substitute format
-    ( 'CMakeLists.txt'
+    ( 'doc/install.md'
+        , r'type-lite\W+"([0-9]+\.[0-9]+")'
+        , 'type-lite "{major}.{minor}"' )
+
+    , ( 'doc/install.md'
+        , r'type-lite\W+([0-9]+\.[0-9]+\.[0-9]+)@'
+        , 'type-lite {major}.{minor}.{patch}@' )
+
+    , ( 'CMakeLists.txt'
         , r'\W{2,4}VERSION\W+([0-9]+\.[0-9]+\.[0-9]+)\W*$'
         , '    VERSION {major}.{minor}.{patch}' )
 
@@ -34,6 +42,10 @@ table = (
 #    , ( 'script/install-type-pkg.py'
 #        , r'\type_version\s+=\s+"([0-9]+\.[0-9]+\.[0-9]+)"\s*$'
 #        , 'type_version = "{major}.{minor}.{patch}"\n' )
+
+    , ( 'conanfile.py'
+        , r'version\s+=\s+"([0-9]+\.[0-9]+\.[0-9]+)"\s*$'
+        , 'version = "{major}.{minor}.{patch}"' )
 
     , ( 'include/nonstd/type.hpp'
         , r'\#define\s+type_MAJOR\s+[0-9]+\s*$'
