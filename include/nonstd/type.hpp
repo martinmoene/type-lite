@@ -374,6 +374,11 @@ private:
 public:
     // default/initializing constructor.
 
+#if type_CPP11_OR_GREATER
+    type_REQUIRES_0(
+        ! std::is_same<D, no_default_t>::value
+    )
+#endif
     type_constexpr boolean()
         : type<bool,Tag,D>()
     {}
