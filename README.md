@@ -56,7 +56,7 @@ In a nutshell
 ---------------
 **type lite** provides building blocks to create strong types with, such as `bits`, `numeric`, `quantity` and `address`. 
 
-**Features and properties of type** are ease of installation (single header), freedom of dependencies other than the standard library. ...
+**Features and properties of type** are ease of installation (single header), freedom of dependencies other than the standard library.
 
 
 License
@@ -83,10 +83,100 @@ Installation
 Synopsis
 --------
 
-| Kind                  | Std   | Operations |                                       
-|-----------------------|-------|------------|
-| **Types**             |&nbsp; | &nbsp;     |
-| type                  |&nbsp; | none       |
+**Contents**  
+- [Namespace and types](#syn-types)
+- [Create a default-constructible type](#syn-default-type)
+- [Create a non-default-constructible type](#syn-non-default-type)
+- [Create a sub-type](syn-sub-type)
+- [Define a function taking a `type`-derived type](#syn-function)
+- [Table with types, their operations and free functions and macros](#syn-table)
+
+<a id="syn-types"></a>
+### Namespace and types
+
+Types and functions of *type lite* are in namespace `nonstd`.
+
+With the exception of `boolean`, types `type` `bits`, `logical`, `equality`, `ordered`, `numeric`, `quantity`, `address`, `offset` are declared as:
+```
+template< typename T, typename Tag, typename D = T >
+struct type;
+```
+
+With `boolean` declared as:
+
+```
+template< typename Tag, typename D = bool >
+struct boolean;
+```
+
+Type `type` is the (possibly indirect) base class of the other strong types.  
+
+<a id="syn-default-type"></a>
+### Create a default-constructible type
+
+Declaring default-constructible type Quantity:
+```
+typedef nonstd::quantity<double, struct QuantityTag> Quantity;
+```
+
+Using the macro:
+```
+type_DEFINE_TYPE_DEFAULT( Quantity, quantity, double )
+```
+
+<a id="syn-non-default-type"></a>
+### Create a non-default-constructible type
+
+Declaring non-default-constructible type Quantity:
+```
+typedef nonstd::quantity<double, struct QuantityTag, nonstd::no_default_t> Quantity;
+```
+
+Using the macro:
+```
+type_DEFINE_TYPE( Quantity, quantity, double )
+```
+
+<a id="syn-sub-type"></a>
+### Create a sub-type
+
+To enable the creation of operations that are common to different types, *type lite* allows to create sub types.
+```
+type_DEFINE_SUBTYPE(        QuantityA, Quantity)
+type_DEFINE_SUBTYPE_DEFAULT(QuantityB, Quantity)
+```
+
+<a id="syn-function"></a>
+### Define a function taking a `type`-derived type
+
+```C++
+#include "nonstd/type.hpp" 
+#include <cmath> 
+#include <iostream>
+
+namespace strong {
+    type_DEFINE_TYPE( Integer, numeric, int )
+    type_DEFINE_FUNCTION( Integer, abs, std::abs )
+}
+
+int main()
+{
+    std::cout << abs( strong::Integer(-7) ) << "\n";
+}
+```
+Compile and run:
+```
+g++ -Wall -std=c++98 -I../include -o 05-function 05-function.cpp && 05-function.exe
+7
+```
+
+<a id="syn-table"></a>
+### Table with types, their operations and free functions and macros
+
+| Kind                  | Std   | Operations / remarks |                                       
+|-----------------------|-------|----------------------|
+| **Types**             |&nbsp; | &nbsp; |
+| type                  |&nbsp; | no operations; base class of the following types |
 | bits                  |&nbsp; | ~&ensp;&amp;&ensp;&brvbar;&ensp;^&ensp;<<&ensp;>>&ensp;&amp;=&ensp;&brvbar;=&ensp;^=&ensp;<<=&ensp;>>= |
 | boolean               |&nbsp; | explicit bool conversion, see [note 1](#note1) |
 | logical               |&nbsp; | !&ensp;&amp;&amp;&ensp;&brvbar;&brvbar; |
@@ -96,6 +186,8 @@ Synopsis
 | quantity              |&nbsp; | ordered&ensp;unary+&ensp;unary-&ensp;+&ensp;-&ensp;*&ensp;/&ensp;+=&ensp;-=&ensp;*=&ensp;/=<br>with&ensp;q&thinsp;/&thinsp;q &rarr; T&ensp;T&thinsp;&times;&thinsp;q&ensp;q&thinsp;&times;&thinsp;T&ensp;q&thinsp;/&thinsp;T |
 | offset                |&nbsp; | ordered&ensp;o&thinsp;+&thinsp;o&ensp;o&thinsp;-&thinsp;o&ensp;o&thinsp;+=&thinsp;o&ensp;o&thinsp;-=&thinsp;o  |
 | address               |&nbsp; | ordered&ensp;a&thinsp;+&thinsp;o&ensp;a&thinsp;-&thinsp;o&ensp;a&thinsp;+=&thinsp;o&ensp;a&thinsp;-=&thinsp;o&ensp;o&thinsp;+&thinsp;a&ensp; |
+| &nbsp;                |&nbsp; | &nbsp; |
+| no_default_t          |&nbsp; | used to make type non-default-constructible|
 | &nbsp;                |&nbsp; | &nbsp; |
 | std::hash&lt;type&lt;...>>    | C++11  | hash type for `type` in namespace `std`; see `make_hash()` |
 | &nbsp;                |&nbsp; | &nbsp; |
@@ -114,35 +206,11 @@ Synopsis
 | type_DEFINE_FUNCTION_CE     |&nbsp; | Adapt an existing constexpr function `f` for a strong type `S` |
 
 <a id="note1"></a>Note 1: On Windows, completely specify `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
-
-### Defining a function taking a `type`-derived type
-
-```C++
-#include "nonstd/type.hpp" 
-#include <cmath> 
-#include <iostream>
-
-namespace strong {
-
-type_DEFINE_TYPE( Integer, numeric, int )
-type_DEFINE_FUNCTION( Integer, abs, std::abs )
-
-}
-
-int main()
-{
-    std::cout << abs( strong::Integer(-7) ) << "\n";
-}
-```
-Compile and run:
-```
-g++ -Wall -std=c++98 -I../include -o 05-function 05-function.cpp && 05-function.exe
-7
-```
  
 
 Configuration
 -------------
+There are no configuration flags currently.
 
 
 Building the tests
