@@ -276,7 +276,7 @@ CASE( "type: Allows to move-swap a type (C++11)" )
 CASE( "type: Allows to obtain hash of a type object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( IntType(7) ) );
+    EXPECT( make_hash( IntType(7) ) != make_hash( IntType(9) ));
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -351,7 +351,7 @@ CASE( "boolean: Allows to compare a boolean for equality" )
 CASE( "boolean: Allows to obtain hash of a boolean object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( Boolean(true) ) );
+    EXPECT( make_hash( Boolean(false) ) != make_hash( Boolean(true) ));
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -429,7 +429,7 @@ CASE( "logical: Allows to or two logicals" )
 CASE( "logical: Allows to obtain hash of a logical object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( BoolLogical( true ) ) );
+    EXPECT( make_hash( BoolLogical(false) ) != make_hash( BoolLogical(true) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -490,7 +490,7 @@ CASE( "equality: Allows to compare an equality for equality" )
 CASE( "equality: Allows to obtain hash of an equality object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( IntEquality( 7 ) ) );
+    EXPECT( make_hash( IntEquality(7) ) != make_hash( IntEquality(9) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -634,7 +634,7 @@ CASE( "bits: Allows to shift-right bits" )
 CASE( "bits: Allows to obtain hash of a bits object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( Bits( 7 ) ) );
+    EXPECT( make_hash( Bits(7) ) != make_hash( Bits(9) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -711,7 +711,7 @@ CASE( "ordered: Allows to compare an ordered for order" )
 CASE( "ordered: Allows to obtain hash of an ordered object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( Ordered( 7 ) ) );
+    EXPECT( make_hash( Ordered(7) ) != make_hash( Ordered(9) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -857,7 +857,7 @@ CASE( "numeric: Allows to add, subtract, multiply, divide, rest-divide numerics 
 CASE( "numeric: Allows to obtain hash of a numeric object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( Numeric( 7 ) ) );
+    EXPECT( make_hash( Numeric(7) ) != make_hash( Numeric(9) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -1002,7 +1002,7 @@ CASE( "quantity: Allows to divide a quantity by a quantity (result: scalar)" )
 CASE( "quantity: Allows to obtain hash of a quantity object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( Quantity( 7 ) ) );
+    EXPECT( make_hash( Quantity(7) ) != make_hash( Quantity(9) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -1127,8 +1127,8 @@ CASE( "address: Disallows to subtract an addresses from an offset" )
 CASE( "address: Allows to obtain hash of an address object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    int i;
-    EXPECT( make_hash( Address( &i ) ) );
+    int i, k;
+    EXPECT( make_hash( Address(&i) ) != make_hash( Address(&k) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
@@ -1204,7 +1204,7 @@ CASE( "offset: Allows to add, subtract offsets (x op= y)" )
 CASE( "offset: Allows to obtain hash of an offset object (C++11)" )
 {
 #if type_CPP11_OR_GREATER
-    EXPECT( make_hash( Offset( 7 ) ) );
+    EXPECT( make_hash( Offset(7) ) != make_hash( Offset(9) ) );
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
