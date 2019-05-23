@@ -1,7 +1,7 @@
 from conans import ConanFile, CMake
 
 class TypeLiteConan(ConanFile):
-    version = "0.0.0"
+    version = "0.1.0"
     name = "type-lite"
     description = "Strong types for C++98, C++11 and later in a single-file header-only library"
     license = "Boost Software License - Version 1.0. http://www.boost.org/LICENSE_1_0.txt"

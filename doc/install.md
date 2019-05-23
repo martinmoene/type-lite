@@ -125,7 +125,7 @@ As CMake package
 	```CMake
 	cmake_minimum_required( VERSION 3.5 FATAL_ERROR )
 	
-	find_package( type-lite "1.2" REQUIRED )
+	find_package( type-lite "0.1" REQUIRED )
 	
 	project( program-using-type-lite LANGUAGES CXX )
 	
@@ -154,7 +154,7 @@ For the [conan package manager](https://www.conan.io/), follow these steps:
 2. Add a reference to *type-lite* to the *requires* section of your project's `conanfile.txt` file:
 
         [requires]
-        type-lite 1.2.3@nonstd-lite/stable
+        type-lite 0.1.0@nonstd-lite/stable
 
 3. Run conan's install command:
 

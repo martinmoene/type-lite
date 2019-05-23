@@ -10,7 +10,7 @@
 #define NONSTD_TYPE_HPP_INCLUDED
 
 #define type_MAJOR  0
-#define type_MINOR  0
+#define type_MINOR  1
 #define type_PATCH  0
 
 #define type_VERSION  type_STRINGIFY(type_MAJOR) "." type_STRINGIFY(type_MINOR) "." type_STRINGIFY(type_PATCH)
