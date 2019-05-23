@@ -20,7 +20,7 @@ project(
 
 set( unit_name       "type" )
 set( package_nspace  "nonstd" )
-set( package_name    "${unit_name}" )
+set( package_name    "${unit_name}-lite" )
 set( package_version "${${PROJECT_NAME}_VERSION}" )
 
 message( STATUS "Project '${PROJECT_NAME}', package '${package_name}' version: '${package_version}'")
@@ -35,17 +35,17 @@ endif()
 
 # If toplevel project, enable building and performing of tests, disable building of examples:
 
-option( TYPE_OPT_BUILD_TESTS    "Build and perform type tests" ${type_IS_TOPLEVEL_PROJECT} )
-option( TYPE_OPT_BUILD_EXAMPLES "Build type examples" OFF )
+option( TYPE_LITE_OPT_BUILD_TESTS    "Build and perform type tests" ${type_IS_TOPLEVEL_PROJECT} )
+option( TYPE_LITE_OPT_BUILD_EXAMPLES "Build type examples" OFF )
 
 # If requested, build and perform tests, build examples:
 
-if ( TYPE_OPT_BUILD_TESTS )
+if ( TYPE_LITE_OPT_BUILD_TESTS )
     enable_testing()
     add_subdirectory( test )
 endif()
 
-if ( TYPE_OPT_BUILD_EXAMPLES )
+if ( TYPE_LITE_OPT_BUILD_EXAMPLES )
     enable_testing()
     add_subdirectory( example )
 endif()
