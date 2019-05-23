@@ -89,6 +89,7 @@ Synopsis
 - [Create a non-default-constructible type](#syn-non-default-type)
 - [Create a sub-type](syn-sub-type)
 - [Define a function taking a strong type](#syn-function)
+- [Define a streaming operator for strong types](#syn-stream)
 - [Table with types, their operations and free functions and macros](#syn-table)
 
 <a id="syn-types"></a>
@@ -114,7 +115,7 @@ Type `type` is the (possibly indirect) base class of the other strong types.
 <a id="syn-default-type"></a>
 ### Create a default-constructible type
 
-Declaring default-constructible type Quantity:
+Declaring default-constructible type Quantity ([example code](example/02-default.cpp)):
 ```C++
 typedef nonstd::quantity<double, struct QuantityTag> Quantity;
 ```
@@ -127,7 +128,7 @@ type_DEFINE_TYPE( Quantity, quantity, double )
 <a id="syn-non-default-type"></a>
 ### Create a non-default-constructible type
 
-Declaring non-default-constructible type Ordered:
+Declaring non-default-constructible type Ordered ([example code](example/03-non-default.cpp)):
 ```C++
 typedef nonstd::ordered<int, struct OrderedTag, nonstd::no_default_t> Ordered;
 ```
@@ -140,7 +141,7 @@ type_DEFINE_TYPE_ND( Ordered, ordered, int )
 <a id="syn-sub-type"></a>
 ### Create a sub-type
 
-To enable the creation of operations that are common to different types, *type lite* allows to create sub types.
+To enable the creation of operations that are common to different types, *type lite* allows to create sub types ([example code](example/04-sub.cpp)):
 ```C++
 type_DEFINE_SUBTYPE( Current, Quantity )
 type_DEFINE_SUBTYPE( Voltage, Quantity )
@@ -148,15 +149,29 @@ type_DEFINE_SUBTYPE( Voltage, Quantity )
 type_DEFINE_SUBTYPE_ND( Day , Ordered )
 type_DEFINE_SUBTYPE_ND( Year, Ordered )
 ```
+Please be aware that this allows undesired mixed expressions like `Current(7) + Voltage(42)` and `Day(21) < Year(2019)`.
 
 <a id="syn-function"></a>
 ### Define a function taking a stong type
 
+Defining a (constexpr) function taking  strong type ([example code](example/05-function.cpp)):
 ```C++
-namespace strong {
-    type_DEFINE_TYPE(        Integer, numeric, int  )
-    type_DEFINE_FUNCTION(    Integer, abs, std::abs )
-    type_DEFINE_FUNCTION_CE( Integer, abs_ce, std::abs )
+type_DEFINE_TYPE(        Integer, numeric, int  )
+type_DEFINE_FUNCTION(    Integer, abs, std::abs )
+type_DEFINE_FUNCTION_CE( Integer, abs_ce, std::abs )
+```
+
+
+<a id="syn-stream"></a>
+### Define a streaming operator for strong types
+
+With the following stream operator, any strong type of *type lite* can be output ([example code](example/06-stream.cpp)):
+
+```C++
+template< typename T, typename Tag, typename D >
+inline std::ostream & operator<<( std::ostream & os, nonstd::type<T,Tag,D> const & v )
+{
+    return os << "[type:" << v.get() << "]";
 }
 ```
 

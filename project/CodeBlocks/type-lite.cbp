@@ -23,7 +23,11 @@
 		<Unit filename="../../conanfile.py" />
 		<Unit filename="../../doc/install.md" />
 		<Unit filename="../../example/01-basic.cpp" />
+		<Unit filename="../../example/02-default.cpp" />
+		<Unit filename="../../example/03-non-default.cpp" />
+		<Unit filename="../../example/04-sub.cpp" />
 		<Unit filename="../../example/05-function.cpp" />
+		<Unit filename="../../example/06-stream.cpp" />
 		<Unit filename="../../include/nonstd/type.hpp" />
 		<Unit filename="../../script/create-cov-rpt.py" />
 		<Unit filename="../../script/create-vcpkg.py" />
