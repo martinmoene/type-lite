@@ -1221,14 +1221,14 @@ type_DECLARE_TAG( Ordered  )
 type_DECLARE_TAG( Integer  )
 type_DECLARE_TAG( Day      )
 
-CASE( "macro: type_DEFINE_TYPE(Strong, Tag, native)" )
+CASE( "macro: type_DEFINE_TYPE(Strong, type, native)" )
 {
     type_DEFINE_TYPE( Quantity, quantity, double )
 
     EXPECT( ( Quantity() < Quantity(7) ) );
 }
 
-CASE( "macro: type_DEFINE_TYPE_ND(Strong, Tag, native)" )
+CASE( "macro: type_DEFINE_TYPE_ND(Strong, type, native)" )
 {
     type_DEFINE_TYPE_ND( Ordered, ordered, int )
 
@@ -1249,7 +1249,7 @@ CASE( "macro: type_DEFINE_SUBTYPE(Sub, Super)" )
         type_DEFINE_SUBTYPE( QuantityA, Quantity )
     };
 
-    EXPECT( ( S::QuantityA() == S::QuantityA() ) );
+    EXPECT( ( S::QuantityA() < S::QuantityA(7) ) );
 #endif
 }
 
@@ -1271,7 +1271,7 @@ CASE( "macro: type_DEFINE_SUBTYPE_ND(Sub, Super)" )
 #endif
 }
 
-CASE( "macro: type_DEFINE_FUNCTION(Strong, StrongFunction, Function)" )
+CASE( "macro: type_DEFINE_FUNCTION(Strong, StrongFunction, function)" )
 {
     struct S {
         type_DEFINE_TYPE_ND(         Integer, numeric, int  )
@@ -1281,7 +1281,7 @@ CASE( "macro: type_DEFINE_FUNCTION(Strong, StrongFunction, Function)" )
     EXPECT( ( S::abs( S::Integer(-7) ) == S::Integer(7) ) );
 }
 
-CASE( "macro: type_DEFINE_FUNCTION_CE(Strong, StrongFunction, Function)" )
+CASE( "macro: type_DEFINE_FUNCTION_CE(Strong, StrongFunction, function)" )
 {
     struct S {
         type_DEFINE_TYPE_ND(            Integer, numeric, int  )
