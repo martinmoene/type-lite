@@ -207,7 +207,18 @@ There are no configuration flags currently.
 
 Reported to work with
 ---------------------
-TODO
+The table below mentions the compiler versions *type lite* is reported to work with.
+
+OS           | Compiler   | Where  | Versions |
+------------:|:-----------|-------:|----------|
+**GNU/Linux**| Clang/LLVM | Travis | 3.5, 3.6, 3.7, 3.8, 3.9, 4.0, 5.0, 6.0 |
+&nbsp;       | GCC        | Travis | 4.8, 4.9, 5, 6, 7, 8 |
+**OS X**     | Xcode      | Travis | 7.3, 8, 9, 10 |
+**Windows**  | Clang/LLVM | Local  | 8.0 |
+&nbsp;       | GCC        | Local  | 8.1 |
+&nbsp;       | Visual C++<br>(Visual Studio)| Local<br>AppVeyor | 10 (2010), 11 (2012), 12 (2013), 14 (2015) non 64-bit, 15 (2017)<br>10 (2010), 11 (2012), 12 (2013), 14 (2015) non 64-bit, 15 (2017) |
+**DOSBox**   | DJGPP      | Local  | ? |
+**FreeDOS**  | DJGPP      | Local  | ? |
 
 
 Building the tests
