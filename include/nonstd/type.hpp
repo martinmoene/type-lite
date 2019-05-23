@@ -183,21 +183,30 @@
 #endif
 
 /**
+ * define a type's tag: used to prevent locally-defined struct in C++98.
+ */
+#if ! type_CPP11_OR_GREATER
+# define type_DECLARE_TAG( type_type )  struct type_type##_tag;
+#else
+# define type_DECLARE_TAG( type_type )  /*tag*/
+#endif
+
+/**
  * define a default-constructible type.
  */
-#define type_DEFINE_TYPE_DEFAULT( type_name, type_type, underlying_type ) \
+#define type_DEFINE_TYPE( type_name, type_type, underlying_type ) \
     typedef ::nonstd::type_type<underlying_type, struct type_name##_tag> type_name;
 
 /**
  * define a non-default-constructible type.
  */
-#define type_DEFINE_TYPE( type_name, type_type, underlying_type ) \
+#define type_DEFINE_TYPE_ND( type_name, type_type, underlying_type ) \
     typedef ::nonstd::type_type<underlying_type, struct type_name##_tag, ::nonstd::no_default_t> type_name;
 
 /**
  * define a default-constructible sub-type.
  */
-#define type_DEFINE_SUBTYPE_DEFAULT( sub, super ) \
+#define type_DEFINE_SUBTYPE( sub, super ) \
     struct sub : super { \
         type_constexpr explicit sub(underlying_type const & x = underlying_type() ) : super(x) {} \
     };
@@ -205,7 +214,7 @@
 /**
  * define a non-default-constructible sub-type.
  */
-#define type_DEFINE_SUBTYPE( sub, super ) \
+#define type_DEFINE_SUBTYPE_ND( sub, super ) \
     struct sub : super { \
         type_constexpr explicit sub(underlying_type const & x) : super(x) {} \
     };

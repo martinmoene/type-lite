@@ -88,7 +88,7 @@ Synopsis
 - [Create a default-constructible type](#syn-default-type)
 - [Create a non-default-constructible type](#syn-non-default-type)
 - [Create a sub-type](syn-sub-type)
-- [Define a function taking a `type`-derived type](#syn-function)
+- [Define a function taking a strong type](#syn-function)
 - [Table with types, their operations and free functions and macros](#syn-table)
 
 <a id="syn-types"></a>
@@ -97,14 +97,14 @@ Synopsis
 Types and functions of *type lite* are in namespace `nonstd`.
 
 With the exception of `boolean`, types `type` `bits`, `logical`, `equality`, `ordered`, `numeric`, `quantity`, `address`, `offset` are declared as:
-```
+```C++
 template< typename T, typename Tag, typename D = T >
 struct type;
 ```
 
 With `boolean` declared as:
 
-```
+```C++
 template< typename Tag, typename D = bool >
 struct boolean;
 ```
@@ -115,60 +115,51 @@ Type `type` is the (possibly indirect) base class of the other strong types.
 ### Create a default-constructible type
 
 Declaring default-constructible type Quantity:
-```
+```C++
 typedef nonstd::quantity<double, struct QuantityTag> Quantity;
 ```
 
 Using the macro:
-```
-type_DEFINE_TYPE_DEFAULT( Quantity, quantity, double )
+```C++
+type_DEFINE_TYPE( Quantity, quantity, double )
 ```
 
 <a id="syn-non-default-type"></a>
 ### Create a non-default-constructible type
 
-Declaring non-default-constructible type Quantity:
-```
-typedef nonstd::quantity<double, struct QuantityTag, nonstd::no_default_t> Quantity;
+Declaring non-default-constructible type Ordered:
+```C++
+typedef nonstd::ordered<int, struct OrderedTag, nonstd::no_default_t> Ordered;
 ```
 
 Using the macro:
-```
-type_DEFINE_TYPE( Quantity, quantity, double )
+```C++
+type_DEFINE_TYPE_ND( Ordered, ordered, int )
 ```
 
 <a id="syn-sub-type"></a>
 ### Create a sub-type
 
 To enable the creation of operations that are common to different types, *type lite* allows to create sub types.
-```
-type_DEFINE_SUBTYPE(        QuantityA, Quantity)
-type_DEFINE_SUBTYPE_DEFAULT(QuantityB, Quantity)
+```C++
+type_DEFINE_SUBTYPE( Current, Quantity )
+type_DEFINE_SUBTYPE( Voltage, Quantity )
+
+type_DEFINE_SUBTYPE_ND( Day , Ordered )
+type_DEFINE_SUBTYPE_ND( Year, Ordered )
 ```
 
 <a id="syn-function"></a>
-### Define a function taking a `type`-derived type
+### Define a function taking a stong type
 
 ```C++
-#include "nonstd/type.hpp" 
-#include <cmath> 
-#include <iostream>
-
 namespace strong {
-    type_DEFINE_TYPE( Integer, numeric, int )
-    type_DEFINE_FUNCTION( Integer, abs, std::abs )
+    type_DEFINE_TYPE(        Integer, numeric, int  )
+    type_DEFINE_FUNCTION(    Integer, abs, std::abs )
+    type_DEFINE_FUNCTION_CE( Integer, abs_ce, std::abs )
 }
+```
 
-int main()
-{
-    std::cout << abs( strong::Integer(-7) ) << "\n";
-}
-```
-Compile and run:
-```
-g++ -Wall -std=c++98 -I../include -o 05-function 05-function.cpp && 05-function.exe
-7
-```
 
 <a id="syn-table"></a>
 ### Table with types, their operations and free functions and macros
@@ -185,7 +176,7 @@ g++ -Wall -std=c++98 -I../include -o 05-function 05-function.cpp && 05-function.
 | numeric               |&nbsp; | ordered&ensp;unary+&ensp;unary-&ensp;++&ensp;--&ensp;+&ensp;-&ensp;*&ensp;/&ensp;%&ensp;+=&ensp;-=&ensp;*=&ensp;/=&ensp;%= |
 | quantity              |&nbsp; | ordered&ensp;unary+&ensp;unary-&ensp;+&ensp;-&ensp;*&ensp;/&ensp;+=&ensp;-=&ensp;*=&ensp;/=<br>with&ensp;q&thinsp;/&thinsp;q &rarr; T&ensp;T&thinsp;&times;&thinsp;q&ensp;q&thinsp;&times;&thinsp;T&ensp;q&thinsp;/&thinsp;T |
 | offset                |&nbsp; | ordered&ensp;o&thinsp;+&thinsp;o&ensp;o&thinsp;-&thinsp;o&ensp;o&thinsp;+=&thinsp;o&ensp;o&thinsp;-=&thinsp;o  |
-| address               |&nbsp; | ordered&ensp;a&thinsp;+&thinsp;o&ensp;a&thinsp;-&thinsp;o&ensp;a&thinsp;+=&thinsp;o&ensp;a&thinsp;-=&thinsp;o&ensp;o&thinsp;+&thinsp;a&ensp; |
+| address               |&nbsp; | ordered&ensp;a&thinsp;-&thinsp;a&ensp;a&thinsp;+&thinsp;o&ensp;a&thinsp;-&thinsp;o&ensp;a&thinsp;+=&thinsp;o&ensp;a&thinsp;-=&thinsp;o&ensp; |
 | &nbsp;                |&nbsp; | &nbsp; |
 | no_default_t          |&nbsp; | used to make type non-default-constructible|
 | &nbsp;                |&nbsp; | &nbsp; |
@@ -198,12 +189,13 @@ g++ -Wall -std=c++98 -I../include -o 05-function 05-function.cpp && 05-function.
 | [operator<<]          |&nbsp; | [not provided] |
 | &nbsp;                |&nbsp; | &nbsp; |
 | **Macros**            |&nbsp; | &nbsp; |
-| type_DEFINE_TYPE            |&nbsp; | Define a strong type `S`, using tag `Tag` and implementation type `T` |
-| type_DEFINE_TYPE_DEFAULT    |&nbsp; | Define a default-constructible strong type |
-| type_DEFINE_SUBTYPE         |&nbsp; | Define a subtype `U` of a strong type `S` |
-| type_DEFINE_SUBTYPE_DEFAULT |&nbsp; | Define a default-constructible subtype of a strong type |
-| type_DEFINE_FUNCTION        |&nbsp; | Adapt an existing function `f` for a strong type `S` |
-| type_DEFINE_FUNCTION_CE     |&nbsp; | Adapt an existing constexpr function `f` for a strong type `S` |
+| type_DECLARE_TAG      |C++98  | Declare tag `S_tag` for strong type `S` to prevent warning "uses local type" in C++98 |
+| type_DEFINE_TYPE      |&nbsp; | Define a default-constructible strong type`S`, based on `type`, implementation type `T` |
+| type_DEFINE_TYPE_ND   |&nbsp; | Define a non-default-constructible strong type`S`, based on `type`, implementation type `T` |
+| type_DEFINE_SUBTYPE   |&nbsp; | Define a default-constructible subtype `U` of strong type `S` |
+| type_DEFINE_SUBTYPE_ND|&nbsp; | Define a non-default-constructible subtype `U` of strong type `S` |
+| type_DEFINE_FUNCTION  |&nbsp; | Adapt an existing function `f` for strong type `S` |
+| type_DEFINE_FUNCTION_CE|&nbsp;| Adapt an existing constexpr function `f` for strong type `S` |
 
 <a id="note1"></a>Note 1: On Windows, completely specify `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
  
@@ -211,6 +203,11 @@ g++ -Wall -std=c++98 -I../include -o 05-function 05-function.cpp && 05-function.
 Configuration
 -------------
 There are no configuration flags currently.
+
+
+Reported to work with
+---------------------
+TODO
 
 
 Building the tests
@@ -377,4 +374,10 @@ offset: Allows to move-construct an offset from its underlying type (C++11)
 offset: Allows to add, subtract offsets (x op y)
 offset: Allows to add, subtract offsets (x op= y)
 offset: Allows to obtain hash of an offset object (C++11)
+macro: type_DEFINE_TYPE(Strong, Tag, native)
+macro: type_DEFINE_TYPE_ND(Strong, Tag, native)
+macro: type_DEFINE_SUBTYPE(Sub, Super)
+macro: type_DEFINE_SUBTYPE_ND(Sub, Super)
+macro: type_DEFINE_FUNCTION(Strong, StrongFunction, Function)
+macro: type_DEFINE_FUNCTION_CE(Strong, StrongFunction, Function)
 ```

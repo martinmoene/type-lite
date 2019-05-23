@@ -1,9 +1,9 @@
 #include "nonstd/type.hpp"
 
 #if 1
-    type_DEFINE_TYPE( Ordered, ordered, int )
-    type_DEFINE_SUBTYPE( Day , Ordered )
-    type_DEFINE_SUBTYPE( Year, Ordered )
+    type_DEFINE_TYPE_ND( Ordered, ordered, int )
+    type_DEFINE_SUBTYPE_ND( Day , Ordered )
+    type_DEFINE_SUBTYPE_ND( Year, Ordered )
 #else
     typedef nonstd::ordered<int, struct day_tag , nonstd::no_default_t> Day;
     typedef nonstd::ordered<int, struct year_tag, nonstd::no_default_t> Year;

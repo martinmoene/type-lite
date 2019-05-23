@@ -82,7 +82,7 @@ std::ostream & operator<<( std::ostream & os, MoveOnly const & x )
 }
 
 #define STATIC_ASSERT( expr ) \
-    static_assert( expr, #expr );
+    static_assert( expr, #expr )
 
 CASE( "CopyMove: copyable and movable [.]" )
 {
@@ -1208,6 +1208,89 @@ CASE( "offset: Allows to obtain hash of an offset object (C++11)" )
 #else
     EXPECT( !!"type: std::hash is not available (no C++11)" );
 #endif
+}
+
+// -----------------------------------------------------------------------
+// macros:
+
+// prevent warning "uses local type" for tag in C++98:
+
+type_DECLARE_TAG( Quantity )
+type_DECLARE_TAG( QuantityA)
+type_DECLARE_TAG( Ordered  )
+type_DECLARE_TAG( Integer  )
+type_DECLARE_TAG( Day      )
+
+CASE( "macro: type_DEFINE_TYPE(Strong, Tag, native)" )
+{
+    type_DEFINE_TYPE( Quantity, quantity, double )
+
+    EXPECT( ( Quantity() < Quantity(7) ) );
+}
+
+CASE( "macro: type_DEFINE_TYPE_ND(Strong, Tag, native)" )
+{
+    type_DEFINE_TYPE_ND( Ordered, ordered, int )
+
+    EXPECT( ( Ordered(7) == Ordered(7) ) );
+}
+
+CASE( "macro: type_DEFINE_SUBTYPE(Sub, Super)" )
+{
+#if type_CPP11_OR_GREATER
+    type_DEFINE_TYPE(               Quantity , quantity, double )
+    type_DEFINE_SUBTYPE( QuantityA, Quantity )
+
+    EXPECT( ( QuantityA() < QuantityA(7) ) );
+#else
+    // prevent warning "uses local type" in C++98:
+    struct S {
+        type_DEFINE_TYPE(               Quantity , quantity, double )
+        type_DEFINE_SUBTYPE( QuantityA, Quantity )
+    };
+
+    EXPECT( ( S::QuantityA() == S::QuantityA() ) );
+#endif
+}
+
+CASE( "macro: type_DEFINE_SUBTYPE_ND(Sub, Super)" )
+{
+#if type_CPP11_OR_GREATER
+    type_DEFINE_TYPE_ND(         Ordered, ordered, int )
+    type_DEFINE_SUBTYPE_ND( Day, Ordered )
+
+    EXPECT( ( Day(7) == Day(7) ) );
+#else
+    // prevent warning "uses local type" in C++98:
+    struct S {
+        type_DEFINE_TYPE_ND(         Ordered, ordered, int )
+        type_DEFINE_SUBTYPE_ND( Day, Ordered )
+    };
+
+    EXPECT( ( S::Day(7) == S::Day(7) ) );
+#endif
+}
+
+CASE( "macro: type_DEFINE_FUNCTION(Strong, StrongFunction, Function)" )
+{
+    struct S {
+        type_DEFINE_TYPE_ND(         Integer, numeric, int  )
+        static type_DEFINE_FUNCTION( Integer, abs, std::abs )
+    };
+
+    EXPECT( ( S::abs( S::Integer(-7) ) == S::Integer(7) ) );
+}
+
+CASE( "macro: type_DEFINE_FUNCTION_CE(Strong, StrongFunction, Function)" )
+{
+    struct S {
+        type_DEFINE_TYPE_ND(            Integer, numeric, int  )
+        static type_DEFINE_FUNCTION_CE( Integer, negate , negate )
+
+        static type_constexpr14 int negate( int v ) { return -v; }
+    };
+
+    EXPECT( ( S::negate( S::Integer(7) ) == S::Integer(-7) ) );
 }
 
 } // anonymous namespace
