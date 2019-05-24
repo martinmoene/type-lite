@@ -254,7 +254,7 @@ The following steps assume that the [*type lite* source code](https://github.com
 
 2. Configure CMake to use the compiler of your choice (run `cmake --help` for a list).
 
-        cmake -G "Unix Makefiles" -DTYPE_OPT_BUILD_TESTS=ON ..
+        cmake -G "Unix Makefiles" -DTYPE_LITE_OPT_BUILD_TESTS=ON ..
 
 3. Build the test suite.    
 

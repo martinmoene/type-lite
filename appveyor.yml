@@ -40,7 +40,7 @@ matrix:
 
 before_build:
     - mkdir build && cd build
-    - cmake -A %platform% -G "%generator%" -DTYPE_OPT_BUILD_TESTS=ON -DTYPE_OPT_BUILD_EXAMPLES=OFF ..
+    - cmake -A %platform% -G "%generator%" -DTYPE_LITE_OPT_BUILD_TESTS=ON -DTYPE_LITE_OPT_BUILD_EXAMPLES=OFF ..
 
 build_script:
     - cmake --build . --config %configuration%
