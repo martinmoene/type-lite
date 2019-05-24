@@ -291,7 +291,7 @@ Notes and references
 - Kyle Markley. [Extreme Type Safety with Opaque Typedefs](https://github.com/CppCon/CppCon2015/blob/master/Lightning%20Talks%20and%20Lunch%20Sessions/Extreme%20Type%20Safety%20with%20Opaque%20Typedefs/Extreme%20Type%20Safety%20with%20Opaque%20Typedefs%20-%20Kyle%20Markley%20-%20CppCon%202015.pdf). CppCon 2015.
 
 *Proposals*
-- Walter E. Brown. [N3515 - Toward Opaque Typedefs for C++1Y, v2](https://wg21.link/n3741). 30 August 2013.
+- Walter E. Brown. [N3741 - Toward Opaque Typedefs for C++1Y, v2](https://wg21.link/n3741). 30 August 2013.
 
 
 Appendix
