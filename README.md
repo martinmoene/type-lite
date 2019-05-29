@@ -269,7 +269,8 @@ All tests should pass, indicating your platform is supported and you are ready t
 
 Other implementations of strong types
 -------------------------------------
-- Anthony Williams. [strong_typedef](https://github.com/anthonywilliams/strong_typedef) on GitHub, Since 2019.
+- Anthony Williams. [strong_typedef](https://github.com/anthonywilliams/strong_typedef) on GitHub, since 2019.
+- Björn Fahller. [strong_type](https://github.com/rollbear/strong_type) on GitHub, since 2017.
 - Tony van Eerd. [StrongId](https://github.com/tvaneerd/code) on GitHub, since 2017.
 - Jonathan Boccara. [NamedType](https://github.com/joboccara/NamedType) on GitHub, since 2017.
 - Jonathan Müller. [type_safe](https://github.com/foonathan/type_safe) on GitHub, since 2016.
