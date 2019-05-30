@@ -19,7 +19,7 @@
 Example usage
 -------------
 
-```C++
+```Cpp
 #include "nonstd/type.hpp"
 
 typedef nonstd::ordered<int, struct day_tag , nonstd::no_default_t> Day;
@@ -98,14 +98,14 @@ Synopsis
 Types and functions of *type lite* are in namespace `nonstd`.
 
 With the exception of `boolean`, types `type` `bits`, `logical`, `equality`, `ordered`, `numeric`, `quantity`, `address`, `offset` are declared as:
-```C++
+```Cpp
 template< typename T, typename Tag, typename D = T >
 struct type;
 ```
 
 With `boolean` declared as:
 
-```C++
+```Cpp
 template< typename Tag, typename D = bool >
 struct boolean;
 ```
@@ -116,12 +116,12 @@ Type `type` is the (possibly indirect) base class of the other strong types.
 ### Create a default-constructible type
 
 Declaring default-constructible type Quantity ([example code](example/02-default.cpp)):
-```C++
+```Cpp
 typedef nonstd::quantity<double, struct QuantityTag> Quantity;
 ```
 
 Using the macro:
-```C++
+```Cpp
 type_DEFINE_TYPE( Quantity, quantity, double )
 ```
 
@@ -129,12 +129,12 @@ type_DEFINE_TYPE( Quantity, quantity, double )
 ### Create a non-default-constructible type
 
 Declaring non-default-constructible type Ordered ([example code](example/03-non-default.cpp)):
-```C++
+```Cpp
 typedef nonstd::ordered<int, struct OrderedTag, nonstd::no_default_t> Ordered;
 ```
 
 Using the macro:
-```C++
+```Cpp
 type_DEFINE_TYPE_ND( Ordered, ordered, int )
 ```
 
@@ -142,7 +142,7 @@ type_DEFINE_TYPE_ND( Ordered, ordered, int )
 ### Create a sub-type
 
 To enable the creation of operations that are common to different types, *type lite* allows to create sub types ([example code](example/04-sub.cpp)):
-```C++
+```Cpp
 type_DEFINE_SUBTYPE( Current, Quantity )
 type_DEFINE_SUBTYPE( Voltage, Quantity )
 
@@ -155,7 +155,7 @@ Please be aware that this allows undesired mixed expressions like `Current(7) + 
 ### Define a function taking a stong type
 
 Defining a (constexpr) function taking  strong type ([example code](example/05-function.cpp)):
-```C++
+```Cpp
 type_DEFINE_TYPE(        Integer, numeric, int  )
 type_DEFINE_FUNCTION(    Integer, abs, std::abs )
 type_DEFINE_FUNCTION_CE( Integer, abs_ce, std::abs )
@@ -167,7 +167,7 @@ type_DEFINE_FUNCTION_CE( Integer, abs_ce, std::abs )
 
 With the following stream operator, any strong type of *type lite* can be output ([example code](example/06-stream.cpp)):
 
-```C++
+```Cpp
 template< typename T, typename Tag, typename D >
 inline std::ostream & operator<<( std::ostream & os, nonstd::type<T,Tag,D> const & v )
 {
