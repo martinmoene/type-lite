@@ -173,7 +173,7 @@
     template< bool B = (__VA_ARGS__), typename std::enable_if<B, int>::type = 0 >
 
 #define type_REQUIRES_T(...) \
-    , typename = typename std::enable_if< (__VA_ARGS__), nonstd::types::detail::enabler >::type
+    , typename std::enable_if< (__VA_ARGS__), int >::type = 0
 
 #define type_REQUIRES_R(R, ...) \
     typename std::enable_if< (__VA_ARGS__), R>::type
@@ -242,13 +242,6 @@
  * implementation namespace
  */
 namespace nonstd { namespace types {
-
-namespace detail {
-
-#if type_CPP11_OR_GREATER
-enum class enabler{};
-#endif
-}
 
 // EqualityComparable, comparison functions based on operator==() and operator<():
 
@@ -750,11 +743,14 @@ to_value( type<T,Tag,D> const & v )
 
 namespace std {
 
+template< typename Key >
+struct hash;
+
 template< typename T, typename Tag, typename D >
-struct hash< nonstd::types::type<T,Tag,D> >
+struct hash< ::nonstd::types::type<T,Tag,D> >
 {
 public:
-    std::size_t operator()( nonstd::types::type<T,Tag,D> const & v ) const type_noexcept
+    std::size_t operator()( ::nonstd::types::type<T,Tag,D> const & v ) const type_noexcept
     {
         return std::hash<T>()( v.get() );
     }
@@ -770,7 +766,7 @@ std::size_t make_hash( type<T,Tag,D> const & v ) type_noexcept
     return std::hash<type<T,Tag,D>>()( v );
 }
 
-}}
+}} // namespace nonstd::types
 
 #endif // type_HAVE_STD_HASH
 
