@@ -2,7 +2,8 @@
 
 [![Language](https://img.shields.io/badge/C%2B%2B-98/11/14/17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization) [![License](https://img.shields.io/badge/license-BSL-blue.svg)](https://opensource.org/licenses/BSL-1.0) [![Build Status](https://travis-ci.org/martinmoene/type-lite.svg?branch=master)](https://travis-ci.org/martinmoene/type-lite) [![Build status](https://ci.appveyor.com/api/projects/status/pm8wxqaahr1snq9g?svg=true)](https://ci.appveyor.com/project/martinmoene/type-lite) [![Version](https://badge.fury.io/gh/martinmoene%2Ftype-lite.svg)](https://github.com/martinmoene/type-lite/releases) [![download](https://img.shields.io/badge/latest-download-blue.svg)](https://github.com/martinmoene/type-lite/blob/master/include/nonstd/type.hpp) [![Conan](https://img.shields.io/badge/on-conan-blue.svg)](https://bintray.com/martinmoene/nonstd-lite/type-lite%3Anonstd-lite/_latestVersion) [![Try it on wandbox](https://img.shields.io/badge/on-wandbox-blue.svg)](https://wandbox.org/permlink/5TM3kiCfPdICosfV) [![Try it on godbolt online](https://img.shields.io/badge/on-godbolt-blue.svg)](https://godbolt.org/z/V3ZqFm)
 
-**Contents**  
+**Contents**
+
 - [Example usage](#example-usage)
 - [In a nutshell](#in-a-nutshell)
 - [License](#license)
@@ -14,7 +15,6 @@
 - [Other implementations of strong types](#other-implementations-of-strong-types)
 - [Notes and references](#notes-and-references)
 - [Appendix](#appendix)
-
 
 Example usage
 -------------
@@ -48,29 +48,31 @@ int main()
 ```
 
 ### Compile and run
-```
+
+```Text
 prompt> g++ -Wall -std=c++11 -I../include -o 01-basic 01-basic.cpp && ./01-basic 
 ```
 
 In a nutshell
 ---------------
-**type lite** provides building blocks to create strong types with, such as `bits`, `numeric`, `quantity` and `address`. 
+
+**type lite** provides building blocks to create strong types with, such as `bits`, `numeric`, `quantity` and `address`.
 
 **Features and properties of type** are ease of installation (single header), freedom of dependencies other than the standard library.
 
-
 License
 -------
+
 *type lite* is distributed under the [Boost Software License](LICENSE.txt).
- 
 
 Dependencies
 ------------
-*type lite* has no other dependencies than the [C++ standard library](http://en.cppreference.com/w/cpp/header).
 
+*type lite* has no other dependencies than the [C++ standard library](http://en.cppreference.com/w/cpp/header).
 
 Installation
 ------------
+
 *type lite* is a single-file header-only library. Here are some ways to use it:
 
 - As copied header in the [include](include) folder of the project source tree or somewhere reachable from your project.
@@ -79,11 +81,11 @@ Installation
 - [As CMake package](doc/install.md#cmake-package)
 - [As Conan package](doc/install.md#conan-package)
 
-
 Synopsis
 --------
 
-**Contents**  
+**Contents**
+
 - [Namespace and types](#syn-types)
 - [Create a default-constructible type](#syn-default-type)
 - [Create a non-default-constructible type](#syn-non-default-type)
@@ -98,6 +100,7 @@ Synopsis
 Types and functions of *type lite* are in namespace `nonstd`.
 
 With the exception of `boolean`, types `type` `bits`, `logical`, `equality`, `ordered`, `numeric`, `quantity`, `address`, `offset` are declared as:
+
 ```Cpp
 template< typename T, typename Tag, typename D = T >
 struct type;
@@ -116,11 +119,13 @@ Type `type` is the (possibly indirect) base class of the other strong types.
 ### Create a default-constructible type
 
 Declaring default-constructible type Quantity ([example code](example/02-default.cpp)):
+
 ```Cpp
 typedef nonstd::quantity<double, struct QuantityTag> Quantity;
 ```
 
 Using the macro:
+
 ```Cpp
 type_DEFINE_TYPE( Quantity, quantity, double )
 ```
@@ -129,11 +134,13 @@ type_DEFINE_TYPE( Quantity, quantity, double )
 ### Create a non-default-constructible type
 
 Declaring non-default-constructible type Ordered ([example code](example/03-non-default.cpp)):
+
 ```Cpp
 typedef nonstd::ordered<int, struct OrderedTag, nonstd::no_default_t> Ordered;
 ```
 
 Using the macro:
+
 ```Cpp
 type_DEFINE_TYPE_ND( Ordered, ordered, int )
 ```
@@ -142,6 +149,7 @@ type_DEFINE_TYPE_ND( Ordered, ordered, int )
 ### Create a sub-type
 
 To enable the creation of operations that are common to different types, *type lite* allows to create sub types ([example code](example/04-sub.cpp)):
+
 ```Cpp
 type_DEFINE_SUBTYPE( Current, Quantity )
 type_DEFINE_SUBTYPE( Voltage, Quantity )
@@ -149,18 +157,19 @@ type_DEFINE_SUBTYPE( Voltage, Quantity )
 type_DEFINE_SUBTYPE_ND( Day , Ordered )
 type_DEFINE_SUBTYPE_ND( Year, Ordered )
 ```
+
 Please be aware that this allows undesired mixed expressions like `Current(7) + Voltage(42)` and `Day(21) < Year(2019)`.
 
 <a id="syn-function"></a>
 ### Define a function taking a stong type
 
 Defining a (constexpr) function taking  strong type ([example code](example/05-function.cpp)):
+
 ```Cpp
 type_DEFINE_TYPE(        Integer, numeric, int  )
 type_DEFINE_FUNCTION(    Integer, abs, std::abs )
 type_DEFINE_FUNCTION_CE( Integer, abs_ce, std::abs )
 ```
-
 
 <a id="syn-stream"></a>
 ### Define a streaming operator for strong types
@@ -174,7 +183,6 @@ inline std::ostream & operator<<( std::ostream & os, nonstd::type<T,Tag,D> const
     return os << "[type:" << v.get() << "]";
 }
 ```
-
 
 <a id="syn-table"></a>
 ### Table with types, their operations and free functions and macros
@@ -213,15 +221,15 @@ inline std::ostream & operator<<( std::ostream & os, nonstd::type<T,Tag,D> const
 | type_DEFINE_FUNCTION_CE|&nbsp;| Adapt an existing constexpr function `f` for strong type `S` |
 
 <a id="note1"></a>Note 1: On Windows, completely specify `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
- 
 
 Configuration
 -------------
-There are no configuration flags currently.
 
+There are no configuration flags currently.
 
 Reported to work with
 ---------------------
+
 The table below mentions the compiler versions *type lite* is reported to work with.
 
 OS           | Compiler   | Where  | Versions |
@@ -235,9 +243,9 @@ OS           | Compiler   | Where  | Versions |
 **DOSBox**   | DJGPP      | Local  | ? |
 **FreeDOS**  | DJGPP      | Local  | ? |
 
-
 Building the tests
 ------------------
+
 To build the tests you need:
 
 - [CMake](http://cmake.org), version 3.0 or later to be installed and in your PATH.
@@ -266,9 +274,9 @@ The following steps assume that the [*type lite* source code](https://github.com
 
 All tests should pass, indicating your platform is supported and you are ready to use *type lite*.
 
-
 Other implementations of strong types
 -------------------------------------
+
 - Anthony Williams. [strong_typedef](https://github.com/anthonywilliams/strong_typedef) on GitHub, since 2019.
 - Björn Fahller. [strong_type](https://github.com/rollbear/strong_type) on GitHub, since 2017.
 - Tony van Eerd. [StrongId](https://github.com/tvaneerd/code) on GitHub, since 2017.
@@ -278,23 +286,25 @@ Other implementations of strong types
 - Martin Moene. [WholeValue](https://github.com/martinmoene/WholeValue) on GitHub, since 2012.
 - Boost.Serialization. [Boost Strong Typedef](http://www.boost.org/doc/libs/1_61_0/libs/serialization/doc/strong_typedef.html). Boost 1.61.0. 
 
-
 Notes and references
 --------------------
+
 *Blogs*
+
 - Jonathan Boccara. [Strong types for strong interfaces](https://www.fluentcpp.com/2016/12/08/strong-types-for-strong-interfaces/). 8 December 2016.
 - Jonathan Müller. [Tutorial: Emulating strong/opaque typedefs in C++](http://foonathan.net/blog/2016/10/19/strong-typedefs.html). 19 Oct 2016.
 - Andrzej Krzemieński. [Declaring the move constructor](https://akrzemi1.wordpress.com/2015/09/11/declaring-the-move-constructor/). 11 September 2015.  
 - Andrzej Krzemieński. [noexcept — what for?](https://akrzemi1.wordpress.com/2014/04/24/noexcept-what-for/). 24 April 2014.
 
 *Presentations*
+
 - Björn Fahller. [Type Safe C++? - LOL! :-)](https://github.com/ACCUConf/ACCUConf_PDFs/blob/master/2018/Bjorn_Fahller_-_Type_safe_c%2B%2B.pdf). ACCU 2018.
 - Jonathan Boccara. [Strong types for strong interfaces](https://youtu.be/WVleZqzTw2k).  Meeting C++ 2017.
 - Kyle Markley. [Extreme Type Safety with Opaque Typedefs](https://github.com/CppCon/CppCon2015/blob/master/Lightning%20Talks%20and%20Lunch%20Sessions/Extreme%20Type%20Safety%20with%20Opaque%20Typedefs/Extreme%20Type%20Safety%20with%20Opaque%20Typedefs%20-%20Kyle%20Markley%20-%20CppCon%202015.pdf). CppCon 2015.
 
 *Proposals*
-- Walter E. Brown. [N3741 - Toward Opaque Typedefs for C++1Y, v2](https://wg21.link/n3741). 30 August 2013.
 
+- Walter E. Brown. [N3741 - Toward Opaque Typedefs for C++1Y, v2](https://wg21.link/n3741). 30 August 2013.
 
 Appendix
 --------
@@ -305,7 +315,7 @@ The version of *type lite* is available via tag `[.version]`. The following tags
 
 ### A.2 Type lite test specification
 
-```
+```Text
 type: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 type: Allows to default-construct a type thus defined
 type: Allows to copy-construct a type from its underlying type
