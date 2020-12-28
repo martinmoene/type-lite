@@ -763,7 +763,7 @@ namespace nonstd { namespace types {
 template< typename T, typename Tag, typename D >
 std::size_t make_hash( type<T,Tag,D> const & v ) type_noexcept
 {
-    return std::hash<type<T,Tag,D>>()( v );
+    return std::hash<::nonstd::types::type<T,Tag,D> >()( v );
 }
 
 }} // namespace nonstd::types
