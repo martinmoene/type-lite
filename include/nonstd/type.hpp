@@ -157,7 +157,7 @@
 
 // Additional includes:
 
-#if type_CPP11_OR_GREATER
+#if type_HAVE_STD_HASH
 # include <functional>      // std::hash<>
 # include <utility>         // std::move(), std::swap()
 # include <type_traits>     // std::is_same<>
@@ -742,9 +742,6 @@ to_value( type<T,Tag,D> const & v )
 #if type_HAVE_STD_HASH
 
 namespace std {
-
-template< typename Key >
-struct hash;
 
 template< typename T, typename Tag, typename D >
 struct hash< ::nonstd::types::type<T,Tag,D> >
