@@ -1074,46 +1074,46 @@ CASE( "address: Allows to subtract addresses to yield an offset (a - a)" )
 CASE( "address: Allows to add, subtract an offset (a + o, a - o)" )
 {
     SETUP("") {
-        int i;
-        Address a( &i );
+        int i[3];
+        Address a( &i[1] );
         OffsetType o( 1 );
 
     SECTION("") {
-        EXPECT( a + o == Address(&i + 1) );
+        EXPECT( a + o == Address(&i[1] + 1) );
     }
     SECTION("") {
-        EXPECT( a - o == Address(&i - 1) );
+        EXPECT( a - o == Address(&i[1] - 1) );
     }}
 }
 
 CASE( "address: Allows to add, subtract an offset (a += o, a -= o)" )
 {
     SETUP("") {
-        int i;
-        Address a( &i );
+        int i[3];
+        Address a( &i[1] );
         OffsetType o( 1 );
 
     SECTION("") {
-        EXPECT( (a += o) == Address(&i + 1) );
+        EXPECT( (a += o) == Address(&i[1] + 1) );
     }
     SECTION("") {
-        EXPECT( (a -= o) == Address(&i - 1) );
+        EXPECT( (a -= o) == Address(&i[1] - 1) );
     }}
 }
 
 CASE( "address: Allows to an offset and an addresses (a + o, o + a)" )
 {
-    int i;
+    int i[3];
 
-    EXPECT( Address(&i)   + OffsetType(1) == Address(&i+1) );
-    EXPECT( OffsetType(1) + Address  (&i) == Address(&i+1) );
+    EXPECT( Address(&i[1]) + OffsetType(1)  == Address(&i[1]+1) );
+    EXPECT( OffsetType(1)  + Address(&i[1]) == Address(&i[1]+1) );
 }
 
 CASE( "address: Allows to subtract an offset from an address (a - o)" )
 {
-    int i;
+    int i[2];
 
-    EXPECT( Address(&i) - OffsetType(1) == Address(&i-1) );
+    EXPECT( Address(&i[1]) - OffsetType(1) == Address(&i[1]-1) );
 }
 
 CASE( "address: Disallows to subtract an addresses from an offset" )
