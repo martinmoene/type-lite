@@ -16,8 +16,7 @@
 - [Notes and references](#notes-and-references)
 - [Appendix](#appendix)
 
-Example usage
--------------
+## Example usage
 
 ```Cpp
 #include "nonstd/type.hpp"
@@ -53,25 +52,21 @@ int main()
 prompt> g++ -Wall -std=c++11 -I../include -o 01-basic 01-basic.cpp && ./01-basic 
 ```
 
-In a nutshell
----------------
+## In a nutshell
 
 **type lite** provides building blocks to create strong types with, such as `bits`, `numeric`, `quantity` and `address`.
 
 **Features and properties of type** are ease of installation (single header), freedom of dependencies other than the standard library.
 
-License
--------
+## License
 
 *type lite* is distributed under the [Boost Software License](LICENSE.txt).
 
-Dependencies
-------------
+## Dependencies
 
 *type lite* has no other dependencies than the [C++ standard library](http://en.cppreference.com/w/cpp/header).
 
-Installation
-------------
+## Installation
 
 *type lite* is a single-file header-only library. Here are some ways to use it:
 
@@ -81,8 +76,7 @@ Installation
 - [As CMake package](doc/install.md#cmake-package)
 - [As Conan package](doc/install.md#conan-package)
 
-Synopsis
---------
+## Synopsis
 
 **Contents**
 
@@ -222,13 +216,11 @@ inline std::ostream & operator<<( std::ostream & os, nonstd::type<T,Tag,D> const
 
 <a id="note1"></a>Note 1: On Windows, completely specify `nonstd::boolean` to prevent clashing with `boolean` from Windows SDK rpcndr.h
 
-Configuration
--------------
+## Configuration
 
 There are no configuration flags currently.
 
-Reported to work with
----------------------
+## Reported to work with
 
 The table below mentions the compiler versions *type lite* is reported to work with.
 
@@ -243,8 +235,7 @@ OS           | Compiler   | Where  | Versions |
 **DOSBox**   | DJGPP      | Local  | ? |
 **FreeDOS**  | DJGPP      | Local  | ? |
 
-Building the tests
-------------------
+## Building the tests
 
 To build the tests you need:
 
@@ -274,8 +265,7 @@ The following steps assume that the [*type lite* source code](https://github.com
 
 All tests should pass, indicating your platform is supported and you are ready to use *type lite*.
 
-Other implementations of strong types
--------------------------------------
+## Other implementations of strong types
 
 - Anthony Williams. [strong_typedef](https://github.com/anthonywilliams/strong_typedef) on GitHub, since 2019.
 - Björn Fahller. [strong_type](https://github.com/rollbear/strong_type) on GitHub, since 2017.
@@ -286,8 +276,7 @@ Other implementations of strong types
 - Martin Moene. [WholeValue](https://github.com/martinmoene/WholeValue) on GitHub, since 2012.
 - Boost.Serialization. [Boost Strong Typedef](http://www.boost.org/doc/libs/1_61_0/libs/serialization/doc/strong_typedef.html). Boost 1.61.0. 
 
-Notes and references
---------------------
+## Notes and references
 
 *Blogs*
 
@@ -306,14 +295,17 @@ Notes and references
 
 - Walter E. Brown. [N3741 - Toward Opaque Typedefs for C++1Y, v2](https://wg21.link/n3741). 30 August 2013.
 
-Appendix
---------
+## Appendix
 
 ### A.1 Compile-time information
 
 The version of *type lite* is available via tag `[.version]`. The following tags are available for information on the compiler and on the C++ standard library used: `[.compiler]`, `[.stdc++]`, `[.stdlanguage]` and `[.stdlibrary]`.
 
 ### A.2 Type lite test specification
+
+<details>
+<summary>click to expand</summary>
+<p>
 
 ```Text
 type: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
@@ -419,3 +411,6 @@ macro: type_DEFINE_SUBTYPE_ND(Sub, Super)
 macro: type_DEFINE_FUNCTION(Strong, StrongFunction, function)
 macro: type_DEFINE_FUNCTION_CE(Strong, StrongFunction, function)
 ```
+
+</p>
+</details>
