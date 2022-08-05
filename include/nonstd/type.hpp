@@ -22,7 +22,7 @@
 
 // (none)
 
-// C++ language version detection (C++20 is speculative):
+// C++ language version detection (C++23 is speculative):
 // Note: VC14.0/1900 (VS2015) lacks too much from C++14.
 
 #ifndef   type_CPLUSPLUS
@@ -38,7 +38,8 @@
 #define type_CPP11_OR_GREATER_ ( type_CPLUSPLUS >= 201103L )
 #define type_CPP14_OR_GREATER  ( type_CPLUSPLUS >= 201402L )
 #define type_CPP17_OR_GREATER  ( type_CPLUSPLUS >= 201703L )
-#define type_CPP20_OR_GREATER  ( type_CPLUSPLUS >= 202000L )
+#define type_CPP20_OR_GREATER  ( type_CPLUSPLUS >= 202002L )
+#define type_CPP23_OR_GREATER  ( type_CPLUSPLUS >= 202300L )
 
 // half-open range [lo..hi):
 #define type_BETWEEN( v, lo, hi ) ( (lo) <= (v) && (v) < (hi) )
