@@ -336,11 +336,6 @@ private:
 template< typename T, typename Tag, typename D = T >
 struct type : data<T,D>
 {
-#if type_CPP11_OR_GREATER
-    type_REQUIRES_0((
-        ! std::is_same<D, no_default_t>::value
-    ))
-#endif
     type_constexpr type()
         : data<T,D>()
     {}
@@ -352,6 +347,21 @@ struct type : data<T,D>
 #else
     type_constexpr explicit type( T const & v )
         : data<T,D>( v )
+    {}
+#endif
+};
+
+// Specialization for no_default_t
+template< typename T, typename Tag >
+struct type<T, Tag, no_default_t> : data<T, no_default_t>
+{
+#if  type_CPP11_OR_GREATER
+    type_constexpr explicit type( T v )
+        : data<T,no_default_t>( std::move(v) )
+    {}
+#else
+    type_constexpr explicit type( T const & v )
+        : data<T,no_default_t>( v )
     {}
 #endif
 };
