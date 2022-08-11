@@ -1,7 +1,7 @@
-// Copyright 2018-2019 Martin Moene
+// Copyright 2018-2022 Martin Moene
 //
-// type, strong types for C++98 and later.
-// For more information see https://github.com/martinmoene/type
+// type-lite, strong types for C++98 and later.
+// For more information see https://github.com/martinmoene/type-lite
 //
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
