@@ -288,6 +288,11 @@ template< typename R, typename T = R > struct bit_shr { friend type_constexpr14 
 struct no_default_t{};
 
 /**
+ * custom default value
+ */
+template<typename T, T Val> struct custom_default_t{};
+
+/**
  * data base class.
  */
 template< typename T, typename D = T >
@@ -362,6 +367,26 @@ struct type<T, Tag, no_default_t> : data<T, no_default_t>
 #else
     type_constexpr explicit type( T const & v )
         : data<T,no_default_t>( v )
+    {}
+#endif
+};
+
+
+// Specialization for custom_default_t
+template< typename T, typename Tag, T Val >
+struct type<T, Tag, custom_default_t< T, Val > > : data<T, custom_default_t< T, Val > >
+{
+    type_constexpr type()
+        : data<T,custom_default_t< T, Val > >(Val)
+    {}
+
+#if  type_CPP11_OR_GREATER
+    type_constexpr explicit type( T v )
+        : data<T,custom_default_t< T, Val > >( std::move(v) )
+    {}
+#else
+    type_constexpr explicit type( T const & v )
+        : data<T,custom_default_t< T, Val > >( v )
     {}
 #endif
 };
@@ -783,6 +808,7 @@ std::size_t make_hash( type<T,Tag,D> const & v ) type_noexcept
 namespace nonstd {
 
 using types::no_default_t;
+using types::custom_default_t;
 
 using types::type;
 using types::bits;
