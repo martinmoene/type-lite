@@ -138,7 +138,7 @@ typedef nonstd::equality<size_t, struct IndexTag,
 Using the macro:
 
 ```Cpp
-type_DEFINE_TYPE_CD( Ordered, ordered, int, -1 )
+type_DEFINE_TYPE_CD( Index, equality, size_t, std::numeric_limits<size_t>::max() )
 ```
 
 <a id="syn-non-default-type"></a>
