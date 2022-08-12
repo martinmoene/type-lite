@@ -1311,6 +1311,13 @@ CASE( "macro: type_DEFINE_TYPE(Strong, type, native)" )
     EXPECT( ( Quantity() < Quantity(7) ) );
 }
 
+CASE( "macro: type_DEFINE_TYPE_CD(Strong, type, native, value)" )
+{
+    type_DEFINE_TYPE_CD( Ordered, ordered, int, -1 )
+
+    EXPECT( ( Ordered() == Ordered(-1) ) );
+}
+
 CASE( "macro: type_DEFINE_TYPE_ND(Strong, type, native)" )
 {
     type_DEFINE_TYPE_ND( Ordered, ordered, int )

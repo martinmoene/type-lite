@@ -200,6 +200,12 @@
     typedef ::nonstd::type_type<underlying_type, struct type_name##_tag> type_name;
 
 /**
+ * define a custom-default-constructible type.
+ */
+#define type_DEFINE_TYPE_CD( type_name, type_type, underlying_type, default_value ) \
+    typedef ::nonstd::type_type<underlying_type, struct type_name##_tag, ::nonstd::custom_default_t<underlying_type, default_value> > type_name;
+
+/**
  * define a non-default-constructible type.
  */
 #define type_DEFINE_TYPE_ND( type_name, type_type, underlying_type ) \

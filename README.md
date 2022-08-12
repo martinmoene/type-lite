@@ -135,6 +135,12 @@ typedef nonstd::equality<size_t, struct IndexTag,
     nonstd::custom_default_t<size_t, std::numeric_limits<size_t>::max()> > Index;
 ```
 
+Using the macro:
+
+```Cpp
+type_DEFINE_TYPE_CD( Ordered, ordered, int, -1 )
+```
+
 <a id="syn-non-default-type"></a>
 ### Create a non-default-constructible type
 
@@ -220,6 +226,7 @@ inline std::ostream & operator<<( std::ostream & os, nonstd::type<T,Tag,D> const
 | **Macros**            |&nbsp; | &nbsp; |
 | type_DECLARE_TAG      |C++98  | Declare tag `S_tag` for strong type `S` to prevent warning "uses local type" in C++98 |
 | type_DEFINE_TYPE      |&nbsp; | Define a default-constructible strong type`S`, based on `type`, implementation type `T` |
+| type_DEFINE_TYPE_CD   |&nbsp; | Define a custom-default-constructible strong type`S`, based on `type`, implementation type `T`, default value `V` |
 | type_DEFINE_TYPE_ND   |&nbsp; | Define a non-default-constructible strong type`S`, based on `type`, implementation type `T` |
 | type_DEFINE_SUBTYPE   |&nbsp; | Define a default-constructible subtype `U` of strong type `S` |
 | type_DEFINE_SUBTYPE_ND|&nbsp; | Define a non-default-constructible subtype `U` of strong type `S` |
@@ -427,6 +434,7 @@ offset: Allows to add, subtract offsets (x op y)
 offset: Allows to add, subtract offsets (x op= y)
 offset: Allows to obtain hash of an offset object (C++11)
 macro: type_DEFINE_TYPE(Strong, type, native)
+macro: type_DEFINE_TYPE_CD(Strong, type, native, value)
 macro: type_DEFINE_TYPE_ND(Strong, type, native)
 macro: type_DEFINE_SUBTYPE(Sub, Super)
 macro: type_DEFINE_SUBTYPE_ND(Sub, Super)
