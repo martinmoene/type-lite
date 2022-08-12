@@ -49,7 +49,7 @@ int main()
 ### Compile and run
 
 ```Text
-prompt> g++ -Wall -std=c++11 -I../include -o 01-basic 01-basic.cpp && ./01-basic 
+prompt> g++ -Wall -std=c++11 -I../include -o 01-basic 01-basic.cpp && ./01-basic
 ```
 
 ## In a nutshell
@@ -82,6 +82,7 @@ prompt> g++ -Wall -std=c++11 -I../include -o 01-basic 01-basic.cpp && ./01-basic
 
 - [Namespace and types](#syn-types)
 - [Create a default-constructible type](#syn-default-type)
+- [Create a default-constructible type with a custom value](#syn-custom-default-type)
 - [Create a non-default-constructible type](#syn-non-default-type)
 - [Create a sub-type](syn-sub-type)
 - [Define a function taking a strong type](#syn-function)
@@ -122,6 +123,16 @@ Using the macro:
 
 ```Cpp
 type_DEFINE_TYPE( Quantity, quantity, double )
+```
+
+<a id="syn-custom-default-type"></a>
+### Create a default-constructible type with a custom value
+
+Declaring default-constructible type Index with a non-zero default value ([example code](example/02a-custom-default.cpp)):
+
+```Cpp
+typedef nonstd::equality<size_t, struct IndexTag,
+    nonstd::custom_default_t<size_t, std::numeric_limits<size_t>::max()> > Index;
 ```
 
 <a id="syn-non-default-type"></a>
@@ -196,6 +207,7 @@ inline std::ostream & operator<<( std::ostream & os, nonstd::type<T,Tag,D> const
 | address               |&nbsp; | ordered&ensp;a&thinsp;-&thinsp;a&ensp;a&thinsp;+&thinsp;o&ensp;a&thinsp;-&thinsp;o&ensp;a&thinsp;+=&thinsp;o&ensp;a&thinsp;-=&thinsp;o&ensp; |
 | &nbsp;                |&nbsp; | &nbsp; |
 | no_default_t          |&nbsp; | used to make type non-default-constructible|
+| custom_default_t      |&nbsp; | used to specify a custom value for default construction|
 | &nbsp;                |&nbsp; | &nbsp; |
 | std::hash&lt;type&lt;...>>    | C++11  | hash type for `type` in namespace `std`; see `make_hash()` |
 | &nbsp;                |&nbsp; | &nbsp; |

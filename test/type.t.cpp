@@ -186,6 +186,14 @@ CASE( "type: Allows to default-construct a type thus defined" )
     EXPECT( to_value( x ) == CopyMove() );
 }
 
+CASE( "type: Allows to custom-default-construct a type thus defined" )
+{
+    typedef type< int, struct Tag, custom_default_t< int, 5 > > CustomDefaultType;
+    CustomDefaultType x;
+
+    EXPECT( to_value( x ) == 5 );
+}
+
 CASE( "type: Allows to copy-construct a type from its underlying type" )
 {
     CopyMoveType x( CopyMove(7) );
@@ -313,6 +321,14 @@ CASE( "boolean: Allows to default-construct a boolean thus defined" )
     EXPECT( to_value( x ) == false );
 }
 
+CASE( "boolean: Allows to custom-default-construct a boolean thus defined" )
+{
+    typedef nonstd::boolean< struct Tag, custom_default_t< bool, true > > CustomDefaultType;
+    CustomDefaultType x;
+
+    EXPECT( to_value( x ) == true );
+}
+
 CASE( "boolean: Allows to copy-construct a boolean from its underlying type" )
 {
     Boolean x( true );
@@ -364,6 +380,7 @@ typedef logical< CopyMove, struct Tag > CopyMoveLogical;
 typedef logical< MoveOnly, struct Tag > MoveOnlyLogical;
 typedef logical< bool    , struct Tag > BoolLogical;
 
+
 CASE( "logical: Disallows to default-construct a logical thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)" )
 {
 #if type_CONFIG_CONFIRMS_COMPILATION_ERRORS
@@ -377,6 +394,14 @@ CASE( "logical: Allows to default-construct a logical thus defined" )
     CopyMoveLogical x;
 
     EXPECT( to_value( x ) == CopyMove(0) );
+}
+
+CASE( "logical: Allows to custom-default-construct a logical thus defined" )
+{
+    typedef logical< int, struct Tag, custom_default_t< int, 5 > > CustomDefaultLogical;
+    CustomDefaultLogical x;
+
+    EXPECT( to_value( x ) == 5 );
 }
 
 CASE( "logical: Allows to copy-construct a logical from its underlying type" )
@@ -457,6 +482,14 @@ CASE( "equality: Allows to default-construct an equality thus defined" )
     EXPECT( to_value( x ) == CopyMove(0) );
 }
 
+CASE( "equality: Allows to custom-default-construct a equality thus defined" )
+{
+    typedef equality< int, struct Tag, custom_default_t< int, 5 > > CustomDefaultEquality;
+    CustomDefaultEquality x;
+
+    EXPECT( to_value( x ) == 5 );
+}
+
 CASE( "equality: Allows to copy-construct an equality from its underlying type" )
 {
     CopyMoveEquality x( CopyMove(7) );
@@ -516,6 +549,14 @@ CASE( "bits: Allows to default-construct a bits thus defined" )
     bits< unsigned int, struct Tag > x;
 
     EXPECT( to_value( x ) == 0u );
+}
+
+CASE( "bits: Allows to custom-default-construct a bits thus defined" )
+{
+    typedef bits< unsigned int, struct Tag, custom_default_t< unsigned int, 5 > > CustomDefaultBits;
+    CustomDefaultBits x;
+
+    EXPECT( to_value( x ) == 5 );
 }
 
 CASE( "bits: Allows to copy-construct a bits from its underlying type" )
@@ -662,6 +703,14 @@ CASE( "ordered: Allows to default-construct an ordered thus defined" )
     EXPECT( to_value( x ) == 0 );
 }
 
+CASE( "ordered: Allows to custom-default-construct an ordered thus defined" )
+{
+    typedef ordered< int, struct Tag, custom_default_t< int, 5 > > CustomDefaultOrdered;
+    CustomDefaultOrdered x;
+
+    EXPECT( to_value( x ) == 5 );
+}
+
 CASE( "ordered: Allows to copy-construct an ordered from its underlying type" )
 {
     CopyMoveOrdered x( CopyMove(7) );
@@ -737,6 +786,14 @@ CASE( "numeric: Allows to default-construct a numeric thus defined" )
     Numeric x;
 
     EXPECT( to_value( x ) == 0 );
+}
+
+CASE( "numeric: Allows to custom-default-construct a numeric thus defined" )
+{
+    typedef numeric< int, struct Tag, custom_default_t< int, 5 > > CustomDefaultNumeric;
+    CustomDefaultNumeric x;
+
+    EXPECT( to_value( x ) == 5 );
 }
 
 CASE( "numeric: Allows to copy-construct a numeric from its underlying type" )
@@ -883,6 +940,14 @@ CASE( "quantity: Allows to default-construct a quantity thus defined" )
     Quantity x;
 
     EXPECT( to_value( x ) == 0 );
+}
+
+CASE( "quantity: Allows to custom-default-construct a quantity thus defined" )
+{
+    typedef quantity< int, struct Tag, custom_default_t< int, 5 > > CustomDefaultQuantity;
+    CustomDefaultQuantity x;
+
+    EXPECT( to_value( x ) == 5 );
 }
 
 CASE( "quantity: Allows to copy-construct a quantity from its underlying type" )
@@ -1036,6 +1101,16 @@ CASE( "address: Allows to default-construct an address thus defined" )
 #endif
 }
 
+int sample = 0;
+
+CASE( "address: Allows to custom-default-construct a address thus defined" )
+{
+    typedef address< int*, std::ptrdiff_t, struct Tag, custom_default_t< int*, &sample > > CustomDefaultAddress;
+    CustomDefaultAddress x;
+
+    EXPECT( to_value( x ) == &sample );
+}
+
 CASE( "address: Allows to copy-construct an address from its underlying type" )
 {
     int i;
@@ -1153,6 +1228,14 @@ CASE( "offset: Allows to default-construct an offset thus defined" )
     Offset x;
 
     EXPECT( to_value( x ) == 0 );
+}
+
+CASE( "offset: Allows to custom-default-construct a offset thus defined" )
+{
+    typedef offset< int, struct Tag, custom_default_t< int, 5 > > CustomDefaultOffset;
+    CustomDefaultOffset x;
+
+    EXPECT( to_value( x ) == 5 );
 }
 
 CASE( "offset: Allows to copy-construct an offset from its underlying type" )
