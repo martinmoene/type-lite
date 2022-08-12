@@ -322,6 +322,7 @@ The version of *type lite* is available via tag `[.version]`. The following tags
 ```Text
 type: Disallows to default-construct a type thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 type: Allows to default-construct a type thus defined
+type: Allows to custom-default-construct a type thus defined
 type: Allows to copy-construct a type from its underlying type
 type: Allows to move-construct a type from its underlying type (C++11)
 type: Allows to copy-construct a type
@@ -334,6 +335,7 @@ type: Allows to obtain hash of a type object (C++11)
 boolean: Disallows to default-construct a boolean thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 boolean: Disallows to substitute booleans with different tags (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 boolean: Allows to default-construct a boolean thus defined
+boolean: Allows to custom-default-construct a boolean thus defined
 boolean: Allows to copy-construct a boolean from its underlying type
 boolean: Allows explicit conversion to a native bool
 boolean: Allows to negate a boolean
@@ -341,6 +343,7 @@ boolean: Allows to compare a boolean for equality
 boolean: Allows to obtain hash of a boolean object (C++11)
 logical: Disallows to default-construct a logical thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 logical: Allows to default-construct a logical thus defined
+logical: Allows to custom-default-construct a logical thus defined
 logical: Allows to copy-construct a logical from its underlying type
 logical: Allows to move-construct a logical from its underlying type (C++11)
 logical: Allows to negate a logical
@@ -349,12 +352,14 @@ logical: Allows to or two logicals
 logical: Allows to obtain hash of a logical object (C++11)
 equality: Disallows to default-construct an equality thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 equality: Allows to default-construct an equality thus defined
+equality: Allows to custom-default-construct a equality thus defined
 equality: Allows to copy-construct an equality from its underlying type
 equality: Allows to move-construct an equality from its underlying type (C++11)
 equality: Allows to compare an equality for equality
 equality: Allows to obtain hash of an equality object (C++11)
 bits: Disallows to default-construct a bits thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 bits: Allows to default-construct a bits thus defined
+bits: Allows to custom-default-construct a bits thus defined
 bits: Allows to copy-construct a bits from its underlying type
 bits: Allows to move-construct a bits from its underlying type (C++11)
 bits: Allows to compare bits for equality
@@ -367,6 +372,7 @@ bits: Allows to shift-right bits
 bits: Allows to obtain hash of a bits object (C++11)
 ordered: Disallows to default-construct an ordered thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 ordered: Allows to default-construct an ordered thus defined
+ordered: Allows to custom-default-construct an ordered thus defined
 ordered: Allows to copy-construct an ordered from its underlying type
 ordered: Allows to move-construct an ordered from its underlying type (C++11)
 ordered: Allows to compare an ordered for equality
@@ -374,6 +380,7 @@ ordered: Allows to compare an ordered for order
 ordered: Allows to obtain hash of an ordered object (C++11)
 numeric: Disallows to default-construct a numeric thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 numeric: Allows to default-construct a numeric thus defined
+numeric: Allows to custom-default-construct a numeric thus defined
 numeric: Allows to copy-construct a numeric from its underlying type
 numeric: Allows to move-construct a numeric from its underlying type (C++11)
 numeric: Allows to compare a numeric for equality
@@ -385,6 +392,7 @@ numeric: Allows to add, subtract, multiply, divide, rest-divide numerics (x op= 
 numeric: Allows to obtain hash of a numeric object (C++11)
 quantity: Disallows to default-construct a quantity thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 quantity: Allows to default-construct a quantity thus defined
+quantity: Allows to custom-default-construct a quantity thus defined
 quantity: Allows to copy-construct a quantity from its underlying type
 quantity: Allows to move-construct a quantity from its underlying type (C++11)
 quantity: Allows to compare a numeric for equality
@@ -399,6 +407,7 @@ quantity: Allows to divide a quantity by a quantity (result: scalar)
 quantity: Allows to obtain hash of a quantity object (C++11)
 address: Disallows to default-construct an address thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 address: Allows to default-construct an address thus defined
+address: Allows to custom-default-construct a address thus defined
 address: Allows to copy-construct an address from its underlying type
 address: Allows to move-construct an address from its underlying type (C++11)
 address: Disallows to add addresses
@@ -411,6 +420,7 @@ address: Disallows to subtract an addresses from an offset
 address: Allows to obtain hash of an address object (C++11)
 offset: Disallows to default-construct an offset thus defined (define type_CONFIG_CONFIRMS_COMPILATION_ERRORS)
 offset: Allows to default-construct an offset thus defined
+offset: Allows to custom-default-construct a offset thus defined
 offset: Allows to copy-construct an offset from its underlying type
 offset: Allows to move-construct an offset from its underlying type (C++11)
 offset: Allows to add, subtract offsets (x op y)
