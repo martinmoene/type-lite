@@ -323,7 +323,7 @@ CASE( "boolean: Allows to default-construct a boolean thus defined" )
 
 CASE( "boolean: Allows to custom-default-construct a boolean thus defined" )
 {
-    typedef boolean< struct Tag, custom_default_t< bool, true > > CustomDefaultType;
+    typedef nonstd::boolean< struct Tag, custom_default_t< bool, true > > CustomDefaultType;
     CustomDefaultType x;
 
     EXPECT( to_value( x ) == true );
