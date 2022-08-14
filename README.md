@@ -172,7 +172,7 @@ type_DEFINE_SUBTYPE_ND( Year, Ordered )
 Please be aware that this allows undesired mixed expressions like `Current(7) + Voltage(42)` and `Day(21) < Year(2019)`.
 
 <a id="syn-function"></a>
-### Define a function taking a stong type
+### Define a function taking a strong type
 
 Defining a (constexpr) function taking  strong type ([example code](example/05-function.cpp)):
 
